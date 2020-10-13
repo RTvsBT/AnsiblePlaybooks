@@ -1,6 +1,6 @@
-<mxfile host="app.diagrams.net" modified="2020-10-13T12:45:47.783Z" agent="5.0 (Windows)" etag="r9OrnakE8d_MMLyMUDvV" version="13.7.9" type="github">
+<mxfile host="app.diagrams.net" modified="2020-10-13T16:21:49.312Z" agent="5.0 (Windows)" etag="Giia-MEbnO4ynhoFKrJH" version="13.7.9" type="github">
   <diagram id="atpudrGSySO1UhPnqVPR" name="Page-1">
-    <mxGraphModel dx="2377" dy="2032" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+    <mxGraphModel dx="1351" dy="2032" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -32,15 +32,8 @@
         <mxCell id="69eiJ88uTjokkPdOnJd1-3" value="" style="shape=image;html=1;verticalAlign=top;verticalLabelPosition=bottom;labelBackgroundColor=#ffffff;imageAspect=0;aspect=fixed;image=https://cdn0.iconfinder.com/data/icons/software-engineering-and-video-gaming/512/77_hacker_user_gammer_programmer-128.png" parent="1" vertex="1">
           <mxGeometry x="310" y="550" width="128" height="128" as="geometry" />
         </mxCell>
-        <mxCell id="69eiJ88uTjokkPdOnJd1-14" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=0;exitDx=0;exitDy=0;entryX=0.5;entryY=1;entryDx=0;entryDy=0;entryPerimeter=0;endArrow=none;endFill=0;" parent="1" source="69eiJ88uTjokkPdOnJd1-4" target="69eiJ88uTjokkPdOnJd1-5" edge="1">
-          <mxGeometry relative="1" as="geometry">
-            <Array as="points">
-              <mxPoint x="156" y="540" />
-              <mxPoint x="156" y="453" />
-              <mxPoint x="160" y="453" />
-              <mxPoint x="160" y="365" />
-            </Array>
-          </mxGeometry>
+        <mxCell id="IJ2bG23suGaT5i6zpgOD-6" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=0;exitDx=0;exitDy=0;entryX=0.5;entryY=1;entryDx=0;entryDy=0;entryPerimeter=0;endArrow=none;endFill=0;" edge="1" parent="1" source="69eiJ88uTjokkPdOnJd1-4" target="69eiJ88uTjokkPdOnJd1-5">
+          <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="69eiJ88uTjokkPdOnJd1-4" value="" style="shape=image;html=1;verticalAlign=top;verticalLabelPosition=bottom;labelBackgroundColor=#ffffff;imageAspect=0;aspect=fixed;image=https://cdn2.iconfinder.com/data/icons/china-and-us-trade-war-4/512/Cybercrime-tradewar-hacker-secure-anonymous-128.png" parent="1" vertex="1">
           <mxGeometry x="100" y="540" width="128" height="128" as="geometry" />
@@ -49,10 +42,10 @@
           <mxGeometry x="139" y="330" width="50" height="45" as="geometry" />
         </mxCell>
         <mxCell id="69eiJ88uTjokkPdOnJd1-7" value="&lt;div&gt;Red team&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
-          <mxGeometry x="131" y="680" width="106" height="40" as="geometry" />
+          <mxGeometry x="114" y="668" width="106" height="40" as="geometry" />
         </mxCell>
         <mxCell id="69eiJ88uTjokkPdOnJd1-8" value="Blue team" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
-          <mxGeometry x="330" y="690" width="86" height="20" as="geometry" />
+          <mxGeometry x="330" y="678" width="86" height="20" as="geometry" />
         </mxCell>
         <mxCell id="69eiJ88uTjokkPdOnJd1-17" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;entryPerimeter=0;endArrow=none;endFill=0;" parent="1" source="69eiJ88uTjokkPdOnJd1-9" target="69eiJ88uTjokkPdOnJd1-5" edge="1">
           <mxGeometry relative="1" as="geometry">
@@ -74,7 +67,7 @@
           </mxGeometry>
         </mxCell>
         <mxCell id="69eiJ88uTjokkPdOnJd1-10" value="" style="aspect=fixed;perimeter=ellipsePerimeter;html=1;align=center;shadow=0;dashed=0;spacingTop=3;image;image=img/lib/active_directory/generic_server.svg;" parent="1" vertex="1">
-          <mxGeometry x="346" y="180" width="28.000000000000004" height="50" as="geometry" />
+          <mxGeometry x="386" y="170" width="28.000000000000004" height="50" as="geometry" />
         </mxCell>
         <mxCell id="69eiJ88uTjokkPdOnJd1-11" value="&lt;div align=&quot;left&quot;&gt;Ticket server&lt;br&gt;&lt;/div&gt;&lt;div&gt;Roles:&lt;br&gt;- Zammad&lt;/div&gt;&lt;div&gt;- email server&lt;/div&gt;&lt;div&gt;- Infrastructure&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
           <mxGeometry x="220" y="30" width="110" height="130" as="geometry" />
@@ -95,7 +88,7 @@
           <mxGeometry x="-100" y="550" width="128" height="128" as="geometry" />
         </mxCell>
         <mxCell id="IJ2bG23suGaT5i6zpgOD-3" value="Automated attacker" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
-          <mxGeometry x="-107" y="678" width="135" height="80" as="geometry" />
+          <mxGeometry x="-107" y="660" width="135" height="80" as="geometry" />
         </mxCell>
         <mxCell id="IJ2bG23suGaT5i6zpgOD-5" value="&lt;div align=&quot;left&quot;&gt;SIEM Server&lt;/div&gt;&lt;div&gt;Roles:&lt;/div&gt;&lt;div&gt;- Receive (h/n)ids logs&lt;/div&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
           <mxGeometry x="353" y="30" width="147" height="80" as="geometry" />
