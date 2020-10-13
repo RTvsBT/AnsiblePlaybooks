@@ -1,6 +1,7 @@
 ---
 - name: Setup active directory environment
   hosts: domain_controller
+  gather_facts: no
   vars_prompt:
     - name: dynamic_ip
       prompt: "Enter the IP of the server: "
