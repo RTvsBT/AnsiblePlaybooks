@@ -26,12 +26,12 @@
     - name: Set static IP address.
       include_tasks: Windows/01-Set-static-ip.yml
       vars:
-        host: dynamic_ip
+        host: '{{ dynamic_ip }}'
 
     - name: Add host to Ansible inventory with new IP.
       include_tasks: Windows/02-Add-host-to-inventory.yml
       vars:
-        password: old_password
+        password: '{{ old_password }}'
 
     - name: Wait for system to become reachable over WinRM.
       include_tasks: Windows/00-Wait-for-winrm.yml
@@ -40,24 +40,21 @@
     - name: Set Password.
       include_tasks: Windows/03-Change-user-password.yml
       vars:
-        password: new_password
+        password: '{{ new_password }}'
       
     - name: Add host to Ansible inventory with new Password.
       include_tasks: Windows/02-Add-host-to-inventory.yml
       vars:
-        password: new_password
+        password: '{{ new_password }}'
 
     - name: Wait for system to become reachable over WinRM.
       include_tasks: Windows/00-Wait-for-winrm.yml
-      vars:
-        host: static_ip
 
     - name: Set upstream DNS server
       include_tasks: Windows/04-Set-upstream-DNS.yml
       vars:
         upstream_dns_1: 1.1.1.1
         upstream_dns_2: 8.8.8.8
-        host: static_ip
   
     - name: Stop the time service
       include_tasks: Windows/05-Stop-service.yml

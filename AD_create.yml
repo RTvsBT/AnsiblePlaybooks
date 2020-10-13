@@ -1,6 +1,6 @@
 ---
 - name: Create new Active-Directory Domain & Forest
-  hosts: localhost
+  hosts: domain_controller
   vars:
     temp_address: 172.16.4.33
     dc_address: 172.16.4.2
@@ -18,15 +18,6 @@
     ntp_servers: "0.us.pool.ntp.org,1.us.pool.ntp.org,2.us.pool.ntp.org,3.us.pool.ntp.org"
   gather_facts: no
   tasks:
-  - name: Add host to Ansible inventory
-    add_host:
-      name: '{{ temp_address }}'
-      ansible_user: '{{ local_admin }}'
-      ansible_password: '{{ temp_password }}'
-      ansible_connection: winrm
-      ansible_winrm_transport: ntlm
-      ansible_winrm_server_cert_validation: ignore
-      ansible_winrm_port: 5986
   - name: Wait for system to become reachable over WinRM
     wait_for_connection:
       timeout: 900
