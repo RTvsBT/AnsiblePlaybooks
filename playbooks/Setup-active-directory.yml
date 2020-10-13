@@ -22,22 +22,27 @@
     #   include_tasks: Windows/00-Wait-for-winrm.yml
     #   vars:
     #     host: dynamic_ip
+    - name: Change asset host if it has static ip
+      include_tasks: Windows/02-Add-host-to-inventory.yml
+      vars:
+        password: '{{ old_password }}'
+      when: '{{static_ip}}' == '{{ dynamic_ip }}'
 
     - name: Set static IP address.
       include_tasks: Windows/01-Set-static-ip.yml
       vars:
         host: '{{ dynamic_ip }}'
-      when: static_ip != dynamic_ip
+      when: '{{static_ip}}' != '{{ dynamic_ip }}'
 
     - name: Add host to Ansible inventory with new IP.
       include_tasks: Windows/02-Add-host-to-inventory.yml
       vars:
         password: '{{ old_password }}'
-      when: static_ip != dynamic_ip
+      when: '{{static_ip}}' != '{{ dynamic_ip }}'
 
     - name: Wait for system to become reachable over WinRM.
       include_tasks: Windows/00-Wait-for-winrm.yml
-      when: static_ip != dynamic_ip
+      when: '{{static_ip}}' != '{{ dynamic_ip }}'
 
     - name: Set Password.
       include_tasks: Windows/03-Change-user-password.yml
