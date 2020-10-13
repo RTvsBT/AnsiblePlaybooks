@@ -1,0 +1,5 @@
+---
+- name: Set static IP address
+  win_shell: "(new-netipaddress -InterfaceAlias Ethernet0 -IPAddress {{ static_ip }} -prefixlength {{ static_ip_netmask_cidr }} -defaultgateway {{ static_gateway }})"
+  delegate_to: '{{ host }}'  
+  ignore_errors: True 

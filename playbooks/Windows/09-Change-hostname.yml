@@ -1,0 +1,6 @@
+---
+- name: Change the hostname 
+  win_hostname:
+    name: '{{ hostname }}'
+  register: res
+  delegate_to: '{{ host }}'

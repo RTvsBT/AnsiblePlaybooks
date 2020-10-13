@@ -1,0 +1,6 @@
+---
+- hosts: all
+  tasks:
+    - Name: Ping All Servers
+      action: ping
+    - debug: msg="Success"

@@ -1,0 +1,89 @@
+---
+- name: Setup active directory environment
+  hosts: AD
+  vars_prompt:
+    - name: dynamic_ip
+      prompt: "Enter the IP of the server: "
+  vars:
+    static_ip: 172.16.4.2
+    static_ip_netmask_cidr: 24
+    static_gateway: 172.16.4.1
+    new_password: 'Letmein123!'
+    old_password: 'student'
+    username: 'student'
+    host: static_ip
+    domain_name: 'demo.lab'
+    recovery_password: W@nnaCry123!
+    hostname: "DC01"
+    ntp_servers: "0.us.pool.ntp.org,1.us.pool.ntp.org,2.us.pool.ntp.org,3.us.pool.ntp.org"
+  tasks:
+    - name: Wait for system to become reachable over WinRM.
+      include_tasks: Windows/00-Wait-for-winrm.yml
+      vars:
+        host: dynamic_ip
+
+    - name: Set static IP address.
+      include_tasks: Windows/01-Set-static-ip.yml
+      vars:
+        host: dynamic_ip
+
+    - name: Add host to Ansible inventory with new IP.
+      include_tasks: Windows/02-Add-host-to-inventory.yml
+      vars:
+        password: old_password
+
+    - name: Wait for system to become reachable over WinRM.
+      include_tasks: Windows/00-Wait-for-winrm.yml
+
+
+    - name: Set Password.
+      include_tasks: Windows/03-Change-user-password.yml
+      vars:
+        password: new_password
+      
+    - name: Add host to Ansible inventory with new Password.
+      include_tasks: Windows/02-Add-host-to-inventory.yml
+      vars:
+        password: new_password
+
+    - name: Wait for system to become reachable over WinRM.
+      include_tasks: Windows/00-Wait-for-winrm.yml
+      vars:
+        host: static_ip
+
+    - name: Set upstream DNS server
+      include_tasks: Windows/04-Set-upstream-DNS.yml
+      vars:
+        upstream_dns_1: 1.1.1.1
+        upstream_dns_1: 8.8.8.8
+        host: static_ip
+  
+    - name: Stop the time service
+      include_tasks: Windows/05-Stop-service.yml
+      vars:
+        service_name: 'w32time'
+
+    - name: Set NTP Servers
+      include_tasks: Windows/06-Set-NTP-server.yml
+
+    - name: Start the time service
+      include_tasks: Windows/05-Stop-service.yml
+      vars:
+        service_name: 'w32time'
+
+    - name: Disable firewall for Domain, Public and Private profiles
+      include_tasks: Windows/08-Disable-firewall.yml
+
+    - name: Change the hostname
+      include_tasks: Windows/09-Change-hostname.yml
+
+    - name: Reboot
+      include_tasks: Windows/10-Reboot.yml
+
+    - name: Install Active Directory
+      include_tasks: Windows/11-Install-active-directory.yml
+
+    - name: Configure DNS server
+      include_tasks: Windows/12-Configure-DNS.yml
+      vars:
+        reverse_dns_zone: "172.16.108.0/24"
