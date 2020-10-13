@@ -13,9 +13,9 @@
     new_password: 'Letmein123!'
     old_password: 'student'
     username: 'student'
-    host: static_ip
+    host: '{{ static_ip }}'
     domain_name: 'demo.lab'
-    recovery_password: W@nnaCry123!
+    recovery_password: 'W@nnaCry123!'
     hostname: "DC01"
     ntp_servers: "0.us.pool.ntp.org,1.us.pool.ntp.org,2.us.pool.ntp.org,3.us.pool.ntp.org"
   tasks:
