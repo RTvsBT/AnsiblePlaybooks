@@ -2,7 +2,7 @@
 - name: Create new Active-Directory Domain & Forest
   hosts: localhost
   vars:
-    temp_address: 172.16.4.144
+    temp_address: 172.16.4.33
     dc_address: 172.16.4.2
     dc_netmask_cidr: 24
     dc_gateway: 172.16.4.1
