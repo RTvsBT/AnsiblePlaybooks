@@ -96,6 +96,7 @@
 - name: install elasticsearch3
   apt_key:
     url: https://artifacts.elastic.co/GPG-KEY-elasticsearch
+    state: present
   become: yes
   become_method: sudo
   become_user: root
@@ -135,8 +136,9 @@
 
 
 - name: add repo key1
-  apt-key:
+  apt_key:
       url: https://dl.packager.io/srv/zammad/zammad/key
+      state: present
   become: yes
   become_method: sudo
   become_user: root
