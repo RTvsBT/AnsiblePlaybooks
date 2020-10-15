@@ -96,7 +96,6 @@
 - name: install elasticsearch3
   apt_key:
     url: https://artifacts.elastic.co/GPG-KEY-elasticsearch
-  # shell: wget -qO -  | sudo apt-key add -
   become: yes
   become_method: sudo
   become_user: root
@@ -118,7 +117,7 @@
   become: yes
   become_method: sudo
   become_user: root
-  ignore_error: yes
+  ignore_errors: yes
 
 - name: install elasticsearch7
   shell: systemctl restart elasticsearch
