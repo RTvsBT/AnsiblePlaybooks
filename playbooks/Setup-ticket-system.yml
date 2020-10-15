@@ -93,8 +93,13 @@
       - gawk
       - libimlib2
       - libimlib2-dev
-
+      - ruby
+      
+  become: yes
+  become_method: sudo
+  become_user: root
   tasks:
+    
     - include: Linux/Zammad/00-zammad_install_prerequisites.yml
       when: zammad_install_prerequisites
 
