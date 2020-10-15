@@ -96,25 +96,25 @@
       - libimlib2-dev
 
   tasks:
-    - include: prerequisites.yml
+    - include: Linux/Zammad/00-zammad_install_prerequisites.yml
       when: zammad_install_prerequisites
 
-    - include: zammad_user.yml
+    - include: Linux/Zammad/01-zammad_user_group_create.yml
       when: zammad_user_group_create
 
-    - include: nginx_setup.yml
+    - include: Linux/Zammad/02-zammad_install_nginx.yml
       when: zammad_install_nginx
 
-    - include: zammad_setup.yml
+    - include: Linux/Zammad/03-zammad_install.yml
       when: zammad_install
 
-    - include: zammad_configure.yml
+    - include: Linux/Zammad/04-zammad_configure.yml
       when: zammad_configure
 
-    - include: zammad_database.yml
+    - include: Linux/Zammad/05-zammad_database.yml
 
-    - include: zammad_assets.yml
+    - include: Linux/Zammad/06-zammad_assets.yml
       when: zammad_precompile_assets
 
-    - include: nginx_configure.yml
+    - include: Linux/Zammad/07-zammad_nginx_configure.yml
       when: zammad_configure_nginx
