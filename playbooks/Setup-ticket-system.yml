@@ -39,16 +39,6 @@
     # Set to true to install with PostgreSQL as database driver
     zammad_db_postgresql: false
 
-    zammad_install_prerequisites: true
-    zammad_install: true
-    zammad_install_nginx: true
-    zammad_configure: false
-    zammad_configure_nginx: true
-    zammad_remove_nginx_default_vhost: false
-    
-    zammad_db_mysql: true
-    zammad_db_postgresql: false
-    
     zammad_db_host: 127.0.0.1
     zammad_db_port: 3306
     zammad_db_username: zammad
@@ -61,9 +51,6 @@
     
     zammad_install_systemd_service: true
     
-    zammad_db_create: false
-    zammad_db_migrate: false
-    zammad_db_seed: false
     zammad_precompile_assets: false
     
     zammad_system_prerequisites_packages:
@@ -94,21 +81,28 @@
       - libimlib2
       - libimlib2-dev
       - ruby
-      
-  become: yes
-  become_method: sudo
-  become_user: root
+      - ruby-bundler
+
   tasks:
     
     - include: Linux/Zammad/00-zammad_install_prerequisites.yml
       when: zammad_install_prerequisites
+      become: yes
+      become_method: sudo
+      become_user: root
 
     - include: Linux/Zammad/01-zammad_user_group_create.yml
       when: zammad_user_group_create
+      become: yes
+      become_method: sudo
+      become_user: root
 
     - include: Linux/Zammad/02-zammad_install_nginx.yml
       when: zammad_install_nginx
-
+      become: yes
+      become_method: sudo
+      become_user: root
+      
     - include: Linux/Zammad/03-zammad_install.yml
       when: zammad_install
 

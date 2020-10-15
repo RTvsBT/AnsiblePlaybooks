@@ -18,20 +18,7 @@
   package:
     name: "{{ item }}"
     state: present
-  become: yes
-  become_method: sudo
-  become_user: root
   with_items: "{{ zammad_system_prerequisites_packages }}"
 
-- name: requirements for installing gems
-  apt:
-    name: "{{ item }}"
-  with_items:
-    - ruby
-    - ruby-dev
-    - make
-
-- name: install gem with proper $PATH
-  gem:
-    name: bundler
-    user_install: no
+- name: install ruby bundler
+  command: gem install bundler:1.17.3
