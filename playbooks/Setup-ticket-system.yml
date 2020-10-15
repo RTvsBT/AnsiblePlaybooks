@@ -120,7 +120,7 @@
     - include: Linux/Zammad/05-zammad_database.yml
       when: stage6 is not defined
     
-      - include: Linux/Zammad/06-zammad_assets.yml
+    - include: Linux/Zammad/06-zammad_assets.yml
       when: zammad_precompile_assets
       when: stage7 is not defined
       

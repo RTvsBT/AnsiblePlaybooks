@@ -10,12 +10,18 @@
     path: /opt/zammad
     state: directory
     mode: 0775
+  become: yes
+  become_method: sudo
+  become_user: root
 
 - name: Unarchive zammad
   unarchive:
     src: /tmp/zammad-latest.tar.gz
     dest: /opt/zammad
     remote_src: yes
+  become: yes
+  become_method: sudo
+  become_user: root
 
 - name: Give zammad user permissions
   file:
@@ -23,6 +29,9 @@
     owner: "{{ zammad_user }}"
     group: "{{ zammad_user }}"
     recurse: true
+  become: yes
+  become_method: sudo
+  become_user: root
 
 # Attention! Inverted logic: "without postgres" means "install with mysql"
 - name: Install application dependencies with mysql database support
