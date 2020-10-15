@@ -25,7 +25,7 @@
 
 - name: requirements for installing gems
   apt:
-    name: {{ item }}
+    name: "{{ item }}"
   with_items:
     - ruby
     - ruby-dev
