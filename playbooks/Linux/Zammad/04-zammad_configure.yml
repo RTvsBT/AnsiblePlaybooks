@@ -1,0 +1,12 @@
+---
+- name: Copy database configuration
+  template:
+    src: templates/database.yml.j2
+    dest: /opt/zammad/config/database.yml
+    owner: "{{ zammad_user }}"
+    group: "{{ zammad_group }}"
+    mode: 0640
+    lstrip_blocks: true
+    trim_blocks: true
+  notify:
+      - restart zammad

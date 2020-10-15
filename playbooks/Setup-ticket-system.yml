@@ -1,0 +1,120 @@
+---
+    - name: Setup Ticketing system & mail server
+      hosts: domain_controller
+      gather_facts: no
+      vars_prompt:
+        - name: dynamic_ip
+          prompt: "Enter the IP of the server: "
+          private: no
+      vars:
+        # Install prerequisites via apt (disable and do it manually to use another package manager)
+        zammad_install_prerequisites: true
+
+        # Install zammad itself (from source)
+        zammad_install: true
+
+        # Configure existing zammad installation (setup can be done by setting ```zammad_install``` to true)
+        zammad_configure: false
+
+        # Install nginx as a reverse proxy in front of zammad
+        zammad_install_nginx: true
+
+        # Configure existing nginx as reverse proxy for zammad installation
+        zammad_configure_nginx: false
+
+        # Remove nginx's default vhost to enable only zammad
+        zammad_remove_nginx_default_vhost: false
+
+        # Set to true to create the database
+        zammad_db_create: false
+
+        # Set to true to run database migrations (you MUST do this is  zammad_db_create  is set to true)
+        zammad_db_migrate: false
+
+        # Set to true to seed the database with initial values (DON'T DO THIS ON AN EXISTING DATABASE!)
+        zammad_db_seed: false
+
+        # Set to true to install with MySQL as database driver
+        zammad_db_mysql: true
+
+        # Set to true to install with PostgreSQL as database driver
+        zammad_db_postgresql: false
+
+        zammad_install_prerequisites: true
+        zammad_install: true
+        zammad_install_nginx: true
+        zammad_configure: false
+        zammad_configure_nginx: true
+        zammad_remove_nginx_default_vhost: false
+        
+        zammad_db_mysql: true
+        zammad_db_postgresql: false
+        
+        zammad_db_host: 127.0.0.1
+        zammad_db_port: 3306
+        zammad_db_username: zammad
+        zammad_db_password: ~
+        zammad_db_name: zammad
+        
+        zammad_user: zammad
+        zammad_group: zammad
+        zammad_user_group_create: true
+        
+        zammad_install_systemd_service: true
+        
+        zammad_db_create: false
+        zammad_db_migrate: false
+        zammad_db_seed: false
+        zammad_precompile_assets: false
+        
+        zammad_system_prerequisites_packages:
+          - curl
+          - git-core
+          - patch
+          - build-essential
+          - bison
+          - zlib1g-dev
+          - libssl-dev
+          - libxml2-dev
+          - sqlite3
+          - libsqlite3-dev
+          - autotools-dev
+          - libxslt1-dev
+          - libyaml-0-2
+          - autoconf
+          - automake
+          - libreadline6-dev
+          - libyaml-dev
+          - libtool
+          - libgmp-dev
+          - libgdbm-dev
+          - libncurses5-dev
+          - pkg-config
+          - libffi-dev
+          - gawk
+          - libimlib2
+          - libimlib2-dev
+          
+      tasks:
+        - include: prerequisites.yml
+          when: zammad_install_prerequisites
+
+        - include: zammad_user.yml
+          when: zammad_user_group_create
+
+        - include: nginx_setup.yml
+          when: zammad_install_nginx
+
+        - include: zammad_setup.yml
+          when: zammad_install
+
+        - include: zammad_configure.yml
+          when: zammad_configure
+
+        - include: zammad_database.yml
+
+        - include: zammad_assets.yml
+          when: zammad_precompile_assets
+
+        - include: nginx_configure.yml
+          when: zammad_configure_nginx
