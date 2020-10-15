@@ -18,4 +18,5 @@
   package:
     name: "{{ item }}"
     state: present
+  become_user: root
   with_items: "{{ zammad_system_prerequisites_packages }}"
