@@ -3,6 +3,9 @@
   group:
     name: "{{ zammad_group }}"
     state: present
+  become: yes
+  become_method: sudo
+  become_user: root
 
 - name: Add zammad user
   user:
@@ -11,3 +14,6 @@
     uid: 1040
     shell: /bin/bash
     state: present
+  become: yes
+  become_method: sudo
+  become_user: root
