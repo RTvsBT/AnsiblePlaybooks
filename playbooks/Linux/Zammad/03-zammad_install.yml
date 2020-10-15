@@ -94,7 +94,9 @@
   become_user: root
 
 - name: install elasticsearch3
-  shell: wget -qO - https://artifacts.elastic.co/GPG-KEY-elasticsearch | sudo apt-key add -
+  apt_key:
+    url: https://artifacts.elastic.co/GPG-KEY-elasticsearch
+  # shell: wget -qO -  | sudo apt-key add -
   become: yes
   become_method: sudo
   become_user: root
@@ -116,6 +118,7 @@
   become: yes
   become_method: sudo
   become_user: root
+  ignore_error: yes
 
 - name: install elasticsearch7
   shell: systemctl restart elasticsearch
@@ -133,13 +136,16 @@
 
 
 - name: add repo key1
-  shell: wget -qO- https://dl.packager.io/srv/zammad/zammad/key | sudo apt-key add -
+  apt-key:
+      url: https://dl.packager.io/srv/zammad/zammad/key
   become: yes
   become_method: sudo
   become_user: root
 
 - name: add repo key2
-  shell: sudo wget -O /etc/apt/sources.list.d/zammad.list https://dl.packager.io/srv/zammad/zammad/stable/installer/debian/10.repo
+  get_url:
+    url: https://dl.packager.io/srv/zammad/zammad/stable/installer/debian/10.repo
+    dest: /etc/apt/sources.list.d/zammad.list 
   become: yes
   become_method: sudo
   become_user: root
@@ -160,3 +166,6 @@
   package:
     name: zammad
     state: present
+  become: yes
+  become_method: sudo
+  become_user: root
