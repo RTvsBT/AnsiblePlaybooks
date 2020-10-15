@@ -81,19 +81,22 @@
 #   become_user: root
 
 
-- name: install elasticsearch1
-  shell: apt install apt-transport-https sudo wget
+- name: Install apt-transport-https
+  package:
+    name: apt-transport-https
+    state: present
   become: yes
   become_method: sudo
   become_user: root
 
-- name: install elasticsearch2
+
+- name: Add source to source list
   shell: echo "deb https://artifacts.elastic.co/packages/7.x/apt stable main" | sudo tee -a /etc/apt/sources.list.d/elastic-7.x.list
   become: yes
   become_method: sudo
   become_user: root
 
-- name: install elasticsearch3
+- name: Add pgp key to keyring
   apt_key:
     url: https://artifacts.elastic.co/GPG-KEY-elasticsearch
     state: present
@@ -101,32 +104,32 @@
   become_method: sudo
   become_user: root
 
-- name: install elasticsearch4
+- name: Synchronize the system
   shell: apt update
   become: yes
   become_method: sudo
   become_user: root
 
-- name: install elasticsearch5
+- name: install elasticsearch
   shell: apt install elasticsearch
   become: yes
   become_method: sudo
   become_user: root
 
-- name: install elasticsearch6
+- name: install the elasticsearch ingest-attachment
   shell: /usr/share/elasticsearch/bin/elasticsearch-plugin install --batch ingest-attachment
   become: yes
   become_method: sudo
   become_user: root
   ignore_errors: yes
 
-- name: install elasticsearch7
+- name: Restart the elasticsearch service
   shell: systemctl restart elasticsearch
   become: yes
   become_method: sudo
   become_user: root
 
-- name: install elasticsearch8
+- name: Set elasticsearch to start on boot
   shell: systemctl enable elasticsearch
   become: yes
   become_method: sudo
@@ -135,7 +138,7 @@
 
 
 
-- name: add repo key1
+- name: Add pgp key to keyring
   apt_key:
       url: https://dl.packager.io/srv/zammad/zammad/key
       state: present
@@ -143,7 +146,7 @@
   become_method: sudo
   become_user: root
 
-- name: add repo key2
+- name: Add source to the source list.
   get_url:
     url: https://dl.packager.io/srv/zammad/zammad/stable/installer/debian/10.repo
     dest: /etc/apt/sources.list.d/zammad.list 
@@ -151,7 +154,7 @@
   become_method: sudo
   become_user: root
 
-- name: add repo key3
+- name: re synchronize the system with the new source list.
   shell: apt update
   become: yes
   become_method: sudo
