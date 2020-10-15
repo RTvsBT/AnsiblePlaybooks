@@ -81,27 +81,77 @@
 #   become_user: root
 
 
-- name: install elasticsearch
-  shell: |
-    apt install apt-transport-https sudo wget
-    echo "deb https://artifacts.elastic.co/packages/7.x/apt stable main" | sudo tee -a /etc/apt/sources.list.d/elastic-7.x.list
-    wget -qO - https://artifacts.elastic.co/GPG-KEY-elasticsearch | sudo apt-key add -
-    apt update
-    apt install elasticsearch
-    sudo /usr/share/elasticsearch/bin/elasticsearch-plugin install ingest-attachment
-    systemctl restart elasticsearch
-    systemctl enable elasticsearch
+- name: install elasticsearch1
+  shell: apt install apt-transport-https sudo wget
+  become: yes
+  become_method: sudo
+  become_user: root
+
+- name: install elasticsearch2
+  shell: echo "deb https://artifacts.elastic.co/packages/7.x/apt stable main" | sudo tee -a /etc/apt/sources.list.d/elastic-7.x.list
+  become: yes
+  become_method: sudo
+  become_user: root
+
+- name: install elasticsearch3
+  shell: wget -qO - https://artifacts.elastic.co/GPG-KEY-elasticsearch | sudo apt-key add -
+  become: yes
+  become_method: sudo
+  become_user: root
+
+- name: install elasticsearch4
+  shell: apt update
+  become: yes
+  become_method: sudo
+  become_user: root
+
+- name: install elasticsearch5
+  shell: apt install elasticsearch
+  become: yes
+  become_method: sudo
+  become_user: root
+
+- name: install elasticsearch6
+  shell: sudo /usr/share/elasticsearch/bin/elasticsearch-plugin install ingest-attachment
+  become: yes
+  become_method: sudo
+  become_user: root
+
+- name: install elasticsearch7
+  shell: systemctl restart elasticsearch
+  become: yes
+  become_method: sudo
+  become_user: root
+
+- name: install elasticsearch8
+  shell: systemctl enable elasticsearch
   become: yes
   become_method: sudo
   become_user: root
 
 
-- name: add repo key
-  shell: |
-    wget -qO- https://dl.packager.io/srv/zammad/zammad/key | sudo apt-key add -
-    sudo wget -O /etc/apt/sources.list.d/zammad.list https://dl.packager.io/srv/zammad/zammad/stable/installer/debian/10.repo
-    apt update
-    apt install zammad
+
+
+- name: add repo key1
+  shell: wget -qO- https://dl.packager.io/srv/zammad/zammad/key | sudo apt-key add -
+  become: yes
+  become_method: sudo
+  become_user: root
+
+- name: add repo key2
+  shell: sudo wget -O /etc/apt/sources.list.d/zammad.list https://dl.packager.io/srv/zammad/zammad/stable/installer/debian/10.repo
+  become: yes
+  become_method: sudo
+  become_user: root
+
+- name: add repo key3
+  shell: apt update
+  become: yes
+  become_method: sudo
+  become_user: root
+
+- name: add repo key4
+  shell: apt install zammad
   become: yes
   become_method: sudo
   become_user: root
