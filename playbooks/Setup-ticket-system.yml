@@ -52,7 +52,7 @@
     zammad_install_systemd_service: true
     
     zammad_precompile_assets: false
-    
+
     zammad_system_prerequisites_packages:
       - curl
       - git-core
@@ -83,6 +83,9 @@
       - ruby
       - ruby-bundler
 
+    stage1: true
+    stage2: true
+    stage3: true
   tasks:
     
     - include: Linux/Zammad/00-zammad_install_prerequisites.yml
@@ -90,29 +93,39 @@
       become: yes
       become_method: sudo
       become_user: root
+      when: stage1 is not defined
 
     - include: Linux/Zammad/01-zammad_user_group_create.yml
       when: zammad_user_group_create
       become: yes
       become_method: sudo
       become_user: root
+      when: stage2 is not defined
 
     - include: Linux/Zammad/02-zammad_install_nginx.yml
       when: zammad_install_nginx
       become: yes
       become_method: sudo
       become_user: root
-      
+      when: stage3 is not defined
+
     - include: Linux/Zammad/03-zammad_install.yml
       when: zammad_install
+      when: stage4 is not defined
 
     - include: Linux/Zammad/04-zammad_configure.yml
       when: zammad_configure
+      when: stage5 is not defined
 
     - include: Linux/Zammad/05-zammad_database.yml
-
-    - include: Linux/Zammad/06-zammad_assets.yml
+      when: stage6 is not defined
+    
+      - include: Linux/Zammad/06-zammad_assets.yml
       when: zammad_precompile_assets
+      when: stage7 is not defined
+      
+
 
     - include: Linux/Zammad/07-zammad_nginx_configure.yml
       when: zammad_configure_nginx
+      when: stage8 is not defined

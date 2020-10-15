@@ -3,7 +3,7 @@
   get_url:
     url: https://ftp.zammad.com/zammad-latest.tar.gz
     dest: /tmp/zammad-latest.tar.gz
-    mode: 0440
+    # mode: 0440
 
 - name: Create zammad target directory
   file:
