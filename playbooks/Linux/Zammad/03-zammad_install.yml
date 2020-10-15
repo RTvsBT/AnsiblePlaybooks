@@ -39,6 +39,9 @@
   args:
     chdir: /opt/zammad
   when: zammad_db_mysql
+  become: yes
+  become_method: sudo
+  become_user: zammad
 
 # Attention! Inverted logic: "without mysql" means "install with postgres"
 - name: Install dependencies with postgres database support
@@ -46,6 +49,9 @@
   args:
     chdir: /opt/zammad
   when: zammad_db_postgresql
+  become: yes
+  become_method: sudo
+  become_user: zammad
 
 - name: After gem installation ensure that directory and contents belong to zammad user again
   file:
@@ -53,14 +59,23 @@
     owner: "{{ zammad_user }}"
     group: "{{ zammad_user }}"
     recurse: true
-
+  become: yes
+  become_method: sudo
+  become_user: root
+  
 - name: Ensure that all users are allowed to execute bundler
   file:
     path: /usr/local/bin/bundle
     mode: 0755
+  become: yes
+  become_method: sudo
+  become_user: root
 
 - name: Install zammad systemd services
   shell: ./install-zammad-systemd-services.sh
   args:
     chdir: /opt/zammad/script/systemd
   when: zammad_install_systemd_service
+  become: yes
+  become_method: sudo
+  become_user: root
