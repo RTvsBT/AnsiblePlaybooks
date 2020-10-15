@@ -2,10 +2,10 @@
 - name: Setup Ticketing system & mail server
   hosts: zammad
   gather_facts: no
-  vars_prompt:
-    - name: dynamic_ip
-      prompt: "Enter the IP of the server: "
-      private: no
+  # vars_prompt:
+  #   - name: dynamic_ip
+  #     prompt: "Enter the IP of the server: "
+  #     private: no
   vars:
     # Install prerequisites via apt (disable and do it manually to use another package manager)
     zammad_install_prerequisites: true
