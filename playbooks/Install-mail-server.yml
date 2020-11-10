@@ -17,4 +17,4 @@
     postfix_ssl_key: /etc/ssl/private/postfix.pem
   roles:
   - stackfocus.postfix-dovecot
-  - { role: Nainterceptor.postfixadmin }
+  - Nainterceptor.postfixadmin
