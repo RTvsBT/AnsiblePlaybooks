@@ -1,6 +1,6 @@
 ---
 - name: Install postfix/dovecot
-  hosts: linux
+  hosts: mail
   vars:
     postfix_dovecot_mysql_db_name: mailserver
     postfix_dovecot_mysql_user: mailuser
@@ -16,5 +16,7 @@
     postfix_ssl_cert: /etc/ssl/certs/postfix.pem
     postfix_ssl_key: /etc/ssl/private/postfix.pem
   roles:
-  - stackfocus.postfix-dovecot
-  - Nainterceptor.postfixadmin
+#  - role: stackfocus.postfix-dovecot
+#    become: yes 
+  - role: mailserver
+    become: yes
