@@ -1,0 +1,8 @@
+---
+# defaults file for Nainterceptor.postfixadmin
+postfixadmin_path: "/var/www/postfixadmin"
+mysql_database: "postfix"
+mysql_username: "postfix"
+mysql_password: null
+mysql_hostname: localhost
+setup_password: password

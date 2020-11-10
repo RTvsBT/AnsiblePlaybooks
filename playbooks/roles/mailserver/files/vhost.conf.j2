@@ -1,0 +1,13 @@
+<VirtualHost *:80>
+    DocumentRoot "{{ postfixadmin_path }}"
+    ErrorLog "/var/log/httpd/postfixadmin-error_log"
+    TransferLog "/var/log/httpd/postfixadmin-access_log"
+
+    <Directory />
+        Options +Indexes +FollowSymLinks +ExecCGI
+        AllowOverride All
+        Order deny,allow
+        Allow from all
+    Require all granted
+    </Directory>
+</VirtualHost>
