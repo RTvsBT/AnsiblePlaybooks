@@ -1,0 +1,23 @@
+---
+- name: Install postfix/dovecot
+  hosts: mail
+  vars:
+    postfix_dovecot_mysql_db_name: mailserver
+    postfix_dovecot_mysql_user: mailuser
+    postfix_dovecot_mysql_password: mailpass
+    postfix_default_domain: demo.lab
+    dovecot_protocols:
+      - imap
+      - pop3
+      - lmtp
+    dovecot_mail_privileged_group: vmail
+    dovecot_ssl_cert: /etc/ssl/certs/dovecot.pem
+    dovecot_ssl_key: /etc/ssl/private/dovecot.pem
+    postfix_ssl_cert: /etc/ssl/certs/postfix.pem
+    postfix_ssl_key: /etc/ssl/private/postfix.pem
+  roles:
+  - role: stackfocus.postfix-dovecot
+    become:yes 
+#    become_user:root    become_method:sudo
+#  - Nainterceptor.postfixadmin
+#  - mailserver

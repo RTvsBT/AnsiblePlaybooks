@@ -16,7 +16,7 @@
   lineinfile:
    destfile: /etc/kibana/kibana.yml
    regexp: 'server.host:'
-   line: 'server.host: 0.0.0.0'
+   line: 'server.host: 192.168.180'
 
 - name: Defining server port
   lineinfile:

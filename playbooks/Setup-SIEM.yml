@@ -1,5 +1,4 @@
----
-- hosts: elksiem
+- hosts: elksiem-kibana, elksiem-elasticsearch, elksiem-logstash
   gather_facts: yes
   pre_tasks:
         - name: update apt cache if needed
@@ -15,8 +14,8 @@
         name: default-jre
         state: present
 
-- hosts: elksiem
-  gather_facts: yes
+- hosts: elksiem-elasticsearch
+  gather_facts: no
   tasks:
     - name: Download Elastic Deb Package
       get_url:
@@ -27,13 +26,13 @@
       become: yes
       apt:
         deb: /tmp/elasticsearch-7.9.3-amd64.deb
-
+    
     - name: Update Elastic Config (IP Address to 0.0.0.0)
       become: yes
       lineinfile:
         destfile: /etc/elasticsearch/elasticsearch.yml
         regexp: 'network.host'
-        line: 'network.host: 0.0.0.0'
+        line: 'network.host: 192.168.2.181'
 
     - name: Updating Elastic Config (Port Number)
       become: yes
@@ -61,7 +60,7 @@
         name: elasticsearch
         state: started
 
-- hosts: elksiem
+- hosts: elksiem-kibana
   gather_facts: no
 
   tasks:
@@ -80,14 +79,14 @@
       lineinfile:
         destfile: /etc/kibana/kibana.yml
         regexp: 'server.host'
-        line: 'server.host: "0.0.0.0"'
+        line: 'server.host: "192.168.2.180"'
 
     - name: Update Kibana Config (Kibana URL)
       become: yes
       lineinfile:
         destfile: /etc/kibana/kibana.yml
         regexp: 'elasticsearch.hosts'
-        line: 'elasticsearch.hosts: ["http://192.168.44.18:9200"]'
+        line: 'elasticsearch.hosts: ["http://192.168.2.181:9200"]'
 
     - name: Start Kibana Service
       become: yes
@@ -95,7 +94,7 @@
         name: kibana
         state: started
 
-- hosts: elksiem
+- hosts: elksiem-logstash
   gather_facts: no
 
   tasks:
@@ -108,6 +107,12 @@
       become: yes
       apt:
         deb: /tmp/logstash-7.9.3.deb
+
+    - name: Empty existing config file first
+      become: yes
+      file:
+        path: /etc/logstash/conf.d/main.conf
+        state: absent   
 
     - name: Create Logstash Pipeline File
       become: yes
@@ -127,7 +132,7 @@
              }
            }
            output {
-             elasticsearch { hosts => ["192.168.44.18:9200"]
+             elasticsearch { hosts => ["192.168.2.181:9200"]
              }
            }
     - name: Download Filebeat Package
@@ -163,7 +168,7 @@
              paths:
               - /var/log/*.log
            output.logstash:
-              hosts: ["localhost:5044"]
+              hosts: ["192.168.2.179:5044"]
 
     - name: Start Logstash Service
       become: yes
