@@ -9,7 +9,7 @@
 
     - name: Install required system packages
       apt: name={{ item }} state=latest update_cache=yes
-      loop: [ 'make', 'apt-transport-https', 'ca-certificates', 'curl', 'software-properties-common', 'python3-pip', 'virtualenv', 'python3-setuptools']
+      loop: [ 'make', 'apt-transport-https', 'ca-certificates', 'curl', 'software-properties-common', 'python3-pip', 'virtualenv', 'python3-setuptools', 'docker-compose']
 
     - name: Add Docker GPG apt Key
       apt_key:
@@ -28,6 +28,11 @@
       pip:
         name: docker
 
+    - name:  remove docker dir if already exist
+      file:
+          state: absent
+          path: /home/student/elastdocker
+
     - name: pull docker elastdocker repo
       become: yes
       git: 
@@ -38,14 +43,17 @@
     - name: update .env file and change password
       replace:
          path: /home/student/elastdocker/.env
-         regexp: '(^ELASTIC_PASSWORD=changeme)$'
-         replace: ELASTIC_PASSWORD=blue
+         regexp: 'ELASTIC_PASSWORD=changeme'
+         replace: ELASTIC_PASSWORD=blue_team_awesome
 
     - name: add wazuh dashboard plugin to kibana
       lineinfile:
            dest: /home/student/elastdocker/kibana/Dockerfile     
            line: RUN kibana-plugin install https://packages.wazuh.com/4.x/ui/kibana/wazuh_kibana-4.0.1_7.9.3-1.zip
-      when: test_grep.stdout == "0"
+
+    - name: add elasticsearch memory necessary setting
+      become: true
+      command: sysctl -w vm.max_map_count=262144
 
     - name: generate kibana self signed certs
       args:
