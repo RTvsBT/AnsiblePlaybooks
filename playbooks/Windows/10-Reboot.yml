@@ -1,0 +1,5 @@
+---
+- name: Reboot
+  win_reboot:
+  when: res.reboot_required   
+  delegate_to: '{{ host }}'

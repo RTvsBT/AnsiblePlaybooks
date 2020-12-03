@@ -1,0 +1,50 @@
+---
+# tasks file for Nainterceptor.postfixadmin
+- name: "Install PHP packages"
+  yum: name={{ item }} state=present
+  with_items:
+    - php
+    - php-imap
+    - php-mysql
+    - php-mbstring
+    - curl
+    - httpd
+    - tar
+
+- name: "Download postfixadmin"
+  get_url: >
+    url=http://sourceforge.net/projects/postfixadmin/files/latest/download
+    dest=/tmp/postfixadmin-latest.tar.gz
+- name: "Prepare - create Path"
+  file:
+    dest: "{{ postfixadmin_path }}"
+    state: directory
+    recurse: yes
+    group: apache
+    owner: apache
+
+- name: "Untar postfixadmin"
+  shell: "tar -C {{ postfixadmin_path }} --strip-components=1 -xvf /tmp/postfixadmin-latest.tar.gz"
+  args:
+    creates: "{{ postfixadmin_path }}/index.php"
+  become: yes
+  become_user: apache
+
+- name: "Replace httpd service"
+  copy: src=../files/httpd.service dest=/usr/lib/systemd/system/httpd.service
+  notify:
+    - "Enable Apache"
+    - "Restart Apache"
+
+- name: "Place httpd vhost"
+  template: src=../files/vhost.conf.j2 dest=/etc/httpd/conf.d/postfixadmin.conf
+
+- name: "Prepare - remove welcome vhost"
+  file:
+    dest: "/etc/httpd/conf.d/welcome.conf"
+    state: absent
+  notify:
+    - "Restart Apache"
+
+- name: "Configure postfixadmin"
+  template: src=../files/config.inc.php.j2 dest={{ postfixadmin_path }}/config.inc.php

@@ -1,0 +1,10 @@
+---
+- name: Add host to Ansible inventory with new IP
+  add_host:
+      name: '{{ host }}'
+      ansible_user: '{{ username }}'
+      ansible_password: '{{ password }}'
+      ansible_connection: winrm
+      ansible_winrm_transport: ntlm
+      ansible_winrm_server_cert_validation: ignore
+      ansible_winrm_port: 5986 

@@ -1,0 +1,7 @@
+install guide for the ansible host
+
+apt install sshpass
+
+install guide for the windows machine
+
+install guide for the linux machine

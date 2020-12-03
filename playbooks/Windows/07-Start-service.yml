@@ -1,0 +1,6 @@
+---
+- name: Stop the time service
+  win_service:
+      name: '{{ service_name }}'
+      state: started
+  delegate_to: '{{ host }}'

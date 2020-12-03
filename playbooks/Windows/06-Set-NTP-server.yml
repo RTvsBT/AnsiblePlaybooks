@@ -1,0 +1,4 @@
+---
+- name: Set NTP Servers
+  win_shell: 'w32tm /config /syncfromflags:manual /manualpeerlist:"{{ntp_servers}}"'
+  delegate_to: '{{ host }}' 

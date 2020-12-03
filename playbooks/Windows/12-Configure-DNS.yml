@@ -1,0 +1,14 @@
+---
+- name: Set internal DNS server 
+  win_dns_client:
+    adapter_names: '*'
+    ipv4_addresses:
+    - '127.0.0.1'
+  delegate_to: '{{ host }}'
+- name: Create reverse DNS zone
+  win_shell: "Add-DnsServerPrimaryZone -NetworkID {{reverse_dns_zone}} -ReplicationScope Forest"
+  delegate_to: "{{ host }}"    
+  retries: 30
+  delay: 60
+  register: result           
+  until: result is succeeded

@@ -1,0 +1,175 @@
+---
+# - name: Download zammad release
+#   get_url:
+#     url: https://ftp.zammad.com/zammad-latest.tar.gz
+#     dest: /tmp/zammad-latest.tar.gz
+#     # mode: 0440
+
+# - name: Create zammad target directory
+#   file:
+#     path: /opt/zammad
+#     state: directory
+#     mode: 0775
+#   become: yes
+#   become_method: sudo
+#   become_user: root
+
+# - name: Unarchive zammad
+#   unarchive:
+#     src: /tmp/zammad-latest.tar.gz
+#     dest: /opt/zammad
+#     remote_src: yes
+#   become: yes
+#   become_method: sudo
+#   become_user: root
+
+# - name: Give zammad user permissions
+#   file:
+#     path: /opt/zammad
+#     owner: "{{ zammad_user }}"
+#     group: "{{ zammad_user }}"
+#     recurse: true
+#   become: yes
+#   become_method: sudo
+#   become_user: root
+
+# # Attention! Inverted logic: "without postgres" means "install with mysql"
+# - name: Install application dependencies with mysql database support
+#   shell: sudo -u zammad bundle install --path vendor/bundle --without test development postgres
+#   args:
+#     chdir: /opt/zammad
+#   when: zammad_db_mysql
+#   become: yes
+#   become_method: sudo
+#   become_user: root
+
+# # Attention! Inverted logic: "without mysql" means "install with postgres"
+# - name: Install dependencies with postgres database support
+#   shell: bundle install --path vendor/bundle --without test development mysql
+#   args:
+#     chdir: /opt/zammad
+#   when: zammad_db_postgresql
+#   become: yes
+#   become_method: sudo
+#   become_user: zammad
+
+# - name: After gem installation ensure that directory and contents belong to zammad user again
+#   file:
+#     path: /opt/zammad
+#     owner: "{{ zammad_user }}"
+#     group: "{{ zammad_user }}"
+#     recurse: true
+#   become: yes
+#   become_method: sudo
+#   become_user: root
+  
+# - name: Ensure that all users are allowed to execute bundler
+#   file:
+#     path: /usr/local/bin/bundle
+#     mode: 0755
+#   become: yes
+#   become_method: sudo
+#   become_user: root
+
+# - name: Install zammad systemd services
+#   shell: ./install-zammad-systemd-services.sh
+#   args:
+#     chdir: /opt/zammad/script/systemd
+#   when: zammad_install_systemd_service
+#   become: yes
+#   become_method: sudo
+#   become_user: root
+
+
+- name: Install apt-transport-https
+  package:
+    name: apt-transport-https
+    state: present
+  become: yes
+  become_method: sudo
+  become_user: root
+
+
+- name: Add source to source list
+  shell: echo "deb https://artifacts.elastic.co/packages/7.x/apt stable main" | sudo tee -a /etc/apt/sources.list.d/elastic-7.x.list
+  become: yes
+  become_method: sudo
+  become_user: root
+
+- name: Add pgp key to keyring
+  apt_key:
+    url: https://artifacts.elastic.co/GPG-KEY-elasticsearch
+    state: present
+  become: yes
+  become_method: sudo
+  become_user: root
+
+- name: Synchronize the system
+  shell: apt update
+  become: yes
+  become_method: sudo
+  become_user: root
+
+- name: install elasticsearch
+  shell: apt install elasticsearch
+  become: yes
+  become_method: sudo
+  become_user: root
+
+- name: install the elasticsearch ingest-attachment
+  shell: /usr/share/elasticsearch/bin/elasticsearch-plugin install --batch ingest-attachment
+  become: yes
+  become_method: sudo
+  become_user: root
+  ignore_errors: yes
+
+- name: Restart the elasticsearch service
+  shell: systemctl restart elasticsearch
+  become: yes
+  become_method: sudo
+  become_user: root
+
+- name: Set elasticsearch to start on boot
+  shell: systemctl enable elasticsearch
+  become: yes
+  become_method: sudo
+  become_user: root
+
+
+
+
+- name: Add pgp key to keyring
+  apt_key:
+      url: https://dl.packager.io/srv/zammad/zammad/key
+      state: present
+  become: yes
+  become_method: sudo
+  become_user: root
+
+- name: Add source to the source list.
+  get_url:
+    url: https://dl.packager.io/srv/zammad/zammad/stable/installer/debian/10.repo
+    dest: /etc/apt/sources.list.d/zammad.list 
+  become: yes
+  become_method: sudo
+  become_user: root
+
+- name: re synchronize the system with the new source list.
+  shell: apt update
+  become: yes
+  become_method: sudo
+  become_user: root
+
+# - name: add repo key4
+#   shell: apt install zammad
+#   become: yes
+#   become_method: sudo
+#   become_user: root
+
+- name: Install zammad
+  package:
+    name: zammad
+    state: present
+  become: yes
+  become_method: sudo
+  become_user: root
