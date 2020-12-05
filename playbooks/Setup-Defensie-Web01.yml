@@ -23,11 +23,11 @@
         owner: www-data
         src: ~/RTvsBT/VulnerableWebsite/
         dest: /var/www/html/
-     - name: seed the database
-       become: yes
-       shell: mysql < /var/www/html/db.sql
+    - name: seed the database
+      become: yes
+      shell: mysql < /var/www/html/db.sql
 #    - name: Change to static ip
     
-     - name: Restart server
-       reboot
+    - name: Restart server
+      reboot
     
