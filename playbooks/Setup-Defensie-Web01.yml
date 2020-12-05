@@ -1,0 +1,27 @@
+---
+- hosts: Defensie-Web01
+  tasks:
+    - name: Install dependencies
+      become: yes
+      apt:
+        pkg:
+        - php-apcu
+        - apache2
+        - mysql-server
+        - php-mysqli
+        - libapache2-mod-php
+    - name: Change Hostname filie
+      become: yes
+      shell: hostnamectl set-hostname Defensie-Web01
+    
+    - name: Change hosts file
+      become: yes
+      shell: sed -i '2 c 127.0.0.1    Defensie-Web01' /etc/hosts
+    - name: Move the webserver files
+      become: yes
+      copy:
+        owner: www-data
+        src: ~/RTvsBT/VulnerableWebsite/
+        dest: /var/www/html/
+        
+    
