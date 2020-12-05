@@ -23,5 +23,8 @@
         owner: www-data
         src: ~/RTvsBT/VulnerableWebsite/
         dest: /var/www/html/
-        
+#    - name: Change to static ip
+    
+    - name: Restart server
+      reboot
     
