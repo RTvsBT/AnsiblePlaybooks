@@ -24,6 +24,11 @@
         owner: www-data
         src: ~/RTvsBT/VulnerableWebsite/
         dest: /var/www/html/
+    - name: Remove default apache page.
+      become: yes
+      file:
+        path: /var/www/html/index.html
+        state: absent
     - name: seed the database
       become: yes
       shell: mysql < /var/www/html/db.sql
