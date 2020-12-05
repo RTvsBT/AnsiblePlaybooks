@@ -28,6 +28,6 @@
        shell: mysql < /var/www/html/db.sql
 #    - name: Change to static ip
     
-    - name: Restart server
-      reboot
+     - name: Restart server
+       reboot
     
