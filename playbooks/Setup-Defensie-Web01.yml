@@ -29,5 +29,4 @@
 #    - name: Change to static ip
     
     - name: Restart server
-      reboot
-    
+      reboot:
