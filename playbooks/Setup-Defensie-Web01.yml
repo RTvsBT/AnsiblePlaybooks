@@ -16,6 +16,7 @@
     
     - name: Change hosts file
       become: yes
+      warn: false
       shell: sed -i '2 c 127.0.0.1    Defensie-Web01' /etc/hosts
     - name: Move the webserver files
       become: yes
