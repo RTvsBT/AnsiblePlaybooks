@@ -18,6 +18,8 @@
       become: yes
       warn: false
       shell: sed -i '2 c 127.0.0.1    Defensie-Web01' /etc/hosts
+      args:
+        warn: false
     - name: Move the webserver files
       become: yes
       copy:
