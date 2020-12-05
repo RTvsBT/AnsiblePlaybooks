@@ -1,5 +1,5 @@
 ---
-- hosts: Defensie-Web01
+- hosts: Defensie_Web01
   tasks:
     - name: Install dependencies
       become: yes
