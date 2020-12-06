@@ -36,6 +36,27 @@
       shell: mysql < /var/www/html/db.sql
 #    - name: Change to static ip
     
+    - name: Patch apparmor
+      become: yes
+      lineinfile:
+        path: /etc/apparmor.d/usr.sbin.mysqld
+        insertbefore: '^}'
+        line: '   /var/www/html/** rw,' 
+    - name: Patch mysqld.cnf
+      become: yes
+      lineinfile:
+        path: /etc/mysql/mysql.conf.d/mysqld.cnf
+        insertbefore: '^secure_file_priv='
+        line: 'secure_file_priv=""' 
+    - name: change folder permissions
+      become: yes
+      file: 
+        path: /var/www/html
+        mode: '777'
+    - name: add www-data to the mysql group
+      become: yes
+      shell: usermod -a -G mysql www-data
+    
     - name: Restart server
       become: yes
       reboot:
