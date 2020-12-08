@@ -21,12 +21,12 @@ IP:           192.168.1.xxx
 OS:           Ubuntu 20.0  
 
 ### Siem: ELK stack
-Description:  This server is responsible for the Log storage and dashboard. It uses an ELK stack ran with docker.  
+Description:  This server is responsible for the Log storage and dashboard. It uses an Wazuh-manager, Elasticsearch and Kibana stack ran with docker.  
 Hostname:     Siem01  
 IP:           192.168.1.xxx  
 Playbook:     playbook/xxx  
-OS:           Ubuntu 20.0  
-Notes:        Kibana dashboard is accessible on port 5601.  
+OS:           Ubuntu 20.04  
+Notes:        Kibana dashboard is accessible on port 443.
 
 ### Ticketing: Zammad
 Description:  This server is responsible for the zammad ticketing system. It uses docker for the installation.  
