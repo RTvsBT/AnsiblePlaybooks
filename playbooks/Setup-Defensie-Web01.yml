@@ -10,6 +10,7 @@
         - mysql-server
         - php-mysqli
         - libapache2-mod-php
+        - curl
     - name: Change Hostname filie
       become: yes
       shell: hostnamectl set-hostname Defensie-Web01
@@ -56,6 +57,34 @@
       become: yes
       shell: usermod -a -G mysql www-data
     
+# Setup and install Wazuh-Agent
+    - name: Get GPG key for wazuh
+      become: yes
+      shell: curl -s https://packages.wazuh.com/key/GPG-KEY-WAZUH | apt-key add -
+    - name: Add wazuh repo to apt list
+      become: yes
+      shell: echo "deb https://packages.wazuh.com/4.x/apt/ stable main" | tee -a /etc/apt/sources.list.d/wazuh.list
+    - name: Update apt & install Wazuh
+      become: yes
+      apt:
+        name: wazuh-agent
+        update_cache: yes
+    - name: Wazuh configuration
+      become: yes
+      lineinfile:
+        path: /var/ossec/etc/ossec.conf
+        insertafter: '<address>'
+        line: '192.168.2.181'
+    - name: Reload daemon for wazuh
+      become: yes
+      shell: systemctl daemon-reload
+    - name: Enable wazuh for next system start
+      become: yes
+      shell: systemctl enable wazuh-agent
+    - name: Start wazuh
+      become: yes
+      shell: systemctl start wazuh-agent
+
     - name: Restart server
       become: yes
       reboot:
