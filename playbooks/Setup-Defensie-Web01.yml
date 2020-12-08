@@ -71,10 +71,10 @@
         update_cache: yes
     - name: Wazuh configuration
       become: yes
-      lineinfile:
+      replace:
         path: /var/ossec/etc/ossec.conf
-        insertbefore: '</address>'
-        line: '192.168.2.181'
+        regexp: 'MANAGER_IP'
+        replace: '192.168.2.181'
     - name: Reload daemon for wazuh
       become: yes
       shell: systemctl daemon-reload
