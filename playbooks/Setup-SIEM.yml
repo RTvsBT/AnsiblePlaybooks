@@ -31,7 +31,7 @@
     - name:  remove docker dir if already exist
       file:
           state: absent
-          path: /home/student/elastdocker
+          path: /home/student/wazuh-docker
 
     - name: pull docker wazuh docker repo with Elasticsearch, Kibana and Wazuh-Manager
       become: yes
