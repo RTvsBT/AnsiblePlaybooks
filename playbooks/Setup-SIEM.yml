@@ -28,7 +28,7 @@
       pip:
         name: docker
 
-    - name:  remove docker dir if already exist
+    - name:  remove docker dir if it already exists
       file:
           state: absent
           path: /home/student/wazuh-docker
@@ -41,10 +41,11 @@
        update: yes  
     
     - name: update .env file and change password
-      replace:
-         path: /home/student/wazuh-docker/.env
-         regexp: 'ELASTIC_PASSWORD=changeme'
-         replace: ELASTIC_PASSWORD=blue_team_awesome
+      copy:
+         dst: /home/student/wazuh-docker/.env
+         content: |
+          API_USERNAME="admin"
+          API_PASSWORD="blue_team_awesome"
 
     - name: add elasticsearch memory necessary setting
       become: true
