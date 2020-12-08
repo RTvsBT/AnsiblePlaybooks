@@ -20,12 +20,12 @@
         state: present
       become: yes
     - name: Create a user
-        user: 
-          name: Carl
-          password: '$6$.UO2AiUW0UfQRavK$xQnMWvBJxovm8y1KHIVqtghWnZowkxftaNIhmo9.onqfvZdIE3Ae6uaddkEHEixJNgMEvjNFJqGhgGM68bdJc/'
-          groups: lxd
-          state: present
-          shell: /bin/bash
-          system: no
-          createhome: yes
-          home: /home/carl
+      user: 
+        name: Carl
+        password: '$6$.UO2AiUW0UfQRavK$xQnMWvBJxovm8y1KHIVqtghWnZowkxftaNIhmo9.onqfvZdIE3Ae6uaddkEHEixJNgMEvjNFJqGhgGM68bdJc/'
+        groups: lxd
+        state: present
+        shell: /bin/bash
+        system: no
+        createhome: yes
+        home: /home/carl
