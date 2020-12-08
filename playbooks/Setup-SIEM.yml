@@ -42,7 +42,7 @@
     
     - name: update .env file and change password
       copy:
-         dst: /home/student/wazuh-docker/.env
+         dest: /home/student/wazuh-docker/.env
          content: |
           API_USERNAME="admin"
           API_PASSWORD="blue_team_awesome"
