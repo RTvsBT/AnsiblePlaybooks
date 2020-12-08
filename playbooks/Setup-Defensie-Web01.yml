@@ -81,9 +81,9 @@
     - name: Enable wazuh for next system start
       become: yes
       shell: systemctl enable wazuh-agent
-    - name: Start wazuh
-      become: yes
-      shell: systemctl start wazuh-agent
+    #- name: Start wazuh
+    #  become: yes
+    #  shell: systemctl start wazuh-agent
 
     - name: Restart server
       become: yes
