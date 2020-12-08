@@ -66,3 +66,11 @@ IP:           192.168.1.xxx
 Playbook:     playbook/xxx  
 OS:           Ubuntu 20.0  
 Notes:        Uses the wazuh agent to send the logs to the wazuh manager.  
+
+### Vulnerable machine 2
+Description:  This machine contains a user that is part of the lxd group.
+Hostname:     Defensie-Lxd01  
+IP:           192.168.1.xxx  
+Playbook:     playbook/xxx  
+OS:           Ubuntu 20.0  
+Notes:        This machine contains a user that is part of the lxd group, which can be used to escalate privileges.  
