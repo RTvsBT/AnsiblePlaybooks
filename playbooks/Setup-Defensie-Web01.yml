@@ -73,7 +73,7 @@
       become: yes
       lineinfile:
         path: /var/ossec/etc/ossec.conf
-        insertafter: '<address>'
+        insertbefore: '</address>'
         line: '192.168.2.181'
     - name: Reload daemon for wazuh
       become: yes
