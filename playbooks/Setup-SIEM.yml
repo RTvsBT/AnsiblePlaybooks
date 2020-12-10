@@ -56,3 +56,23 @@
         chdir: /home/student/wazuh-docker
       command: docker-compose up -d
           
+    # Copy and place the decoder and rules files for the Wazuh Manager into Docker
+    - name: copy decoder file
+      become: yes
+      copy: 
+        src: ~/RTvsBT/AnsiblePlaybooks/assets/WazuhManagerAssets/local_decoder.xml
+        dest: /home/student/wazuh-docker/temp/local_decoder.xml
+    - name: copy rules file
+      become: yes
+      copy:
+        src: ~/RTvsBT/AnsiblePlaybooks/assets/WazuhManagerAssets/local_rules.xml
+        dest: /home/student/wazuh-docker/temp/local_rules.xml
+    - name: copy decoder file into docker
+      become: yes
+      shell: docker cp /home/student/wazuh-docker/temp/local_decoder.xml wazuh-docker_wazuh_1:/var/ossec/etc/decoders/local_decoder.xml
+    - name: copy rules file into docker
+      become: yes
+      shell: docker cp /home/student/wazuh-docker/temp/local_rules.xml wazuh-docker_wazuh_1:/var/ossec/etc/rules/local_rules.xml
+    - name: restart wazuh-manager container
+      become: yes
+      shell: docker restart wazuh-docker_wazuh_1
