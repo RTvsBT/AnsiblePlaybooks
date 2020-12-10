@@ -57,6 +57,9 @@
       command: docker-compose up -d
           
     # Copy and place the decoder and rules files for the Wazuh Manager into Docker
+    - name: create temp folder
+      become: yes
+      shell: mkdir /home/student/wazuh-docker/temp
     - name: copy decoder file
       become: yes
       copy: 
