@@ -1,0 +1,7 @@
+<!-- The base decoder used by the HIDS -->
+
+<decoder name="local_decoder">
+  <prematch>myScriptLog[\d+]:</prematch>
+  <regex offset="after_prematch"> (\.+): (\d+/\d\d/\d\d) (\d\d:\d\d:\d\d) (\d+.\d+.\d+.\d+) (\.+)</regex>
+  <order>msg.description, msg.date, msg.time, msg.ip, msg.data</order>
+</decoder>

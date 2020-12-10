@@ -1,0 +1,14 @@
+<!-- The base set of rules used for the HIDS -->
+
+<group name="base">
+  <rule id="100001" level="5">
+    <decoded_as>local_decoder</decoded_as>
+    <field name="msg.description">SQL Injection attempt</field>
+    <description>SQL Injection Attempt</description>
+  </rule>
+  <rule id="100002" level="5">
+    <decoded_as>local_decoder</decoded_as>
+    <field name="msg.description">Login brute force attempt by</field>
+    <description>Brute Force Attempt</description>
+  </rule>
+ </group>
