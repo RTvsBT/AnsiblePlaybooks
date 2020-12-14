@@ -1,18 +1,20 @@
 # AnsiblePlaybooks
+Follow this wiki article to install the network.
+https://github.com/RTvsBT/RTvsBT/wiki/Installation-guide
+
+# More information:
 This repository contains ansible playbooks. These playbooks are used to deploy the RTvsBT network.  
 To run a seperate playbook:  
 `ansible-playbook -i hosts.ini playbooks/<playbook>.yml`  
 
 To deploy the full network:  
-`ansible-playbook -i hosts.ini playbooks/DeployNetwork.yml`  
+`ansible-playbook -i hosts.ini playbooks/complete.yml`  
 
-To change the default credentials of the machine check out the hosts.ini file.  
+Note: if there is need to change the inventory file of ansible.
+Edit /etc/ansible/hosts.ini NOT RTvsBT/AnsiblePlaybooks/hosts.ini
 
 ## Network
-
-
-
-THe current network contains the following machines
+The current network contains the following machines
 
 ### Deploy: Ansible
 Description:  This server deploys all the other servers.  
