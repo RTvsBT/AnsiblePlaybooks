@@ -24,7 +24,7 @@
       become: yes
       copy:
         owner: www-data
-        src: ~/RTvsBT/VulnerableWebsite/
+        src: /opt/RTvsBT/VulnerableWebsite/
         dest: /var/www/html/
     - name: Remove default apache page.
       become: yes
