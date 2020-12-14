@@ -154,4 +154,4 @@
       reboot:
     - name: Start Suricata
       become: yes
-      shell: suricata -c /etc/suricata/suricata.yml -i ens160
+      shell: suricata -c /etc/suricata/suricata.yaml -i ens160
