@@ -128,15 +128,23 @@
       shell: tar -xvzf suricata-6.0.1.tar.gz
     - name: Change directory and configure it
       become: yes
-      shell: cd suricata-6.0.1 && ./configure --enable-nfqueue --prefix=/usr --sysconfdir=/etc --localstatedir=/var
+      args:
+        chdir: ~/suricata-6.0.1
+      shell: ./configure --enable-nfqueue --prefix=/usr --sysconfdir=/etc --localstatedir=/var
     - name: Make
       become: yes
+      args:
+        chdir: ~/suricata-6.0.1
       shell: make
     - name: Make install
       become: yes
+      args:
+        chdir: ~/suricata-6.0.1
       shell: make install-full
     - name: Install all the rules
       become: yes
+      args:
+        chdir: ~/suricata-6.0.1
       shell: make install-rules
     - name: Edit suricata.yaml
       become: yes
