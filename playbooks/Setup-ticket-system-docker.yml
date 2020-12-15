@@ -5,8 +5,11 @@
   tasks:
     
     - include: Linux/Zammad/00-zammad_clone_repos.yml
-      when: zammad_clone_repos
       become: yes
       become_method: sudo
       become_user: root
-      when: stage1 is not defined
+
+    - include: Linux/Zammad/01-zammad_install_containers.yml
+      become: yes
+      become_method: sudo
+      become_user: root
