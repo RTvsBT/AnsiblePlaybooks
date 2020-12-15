@@ -5,7 +5,6 @@
       - docker
       - docker-compose
       - python
-      - python-pip
     state: latest
 - name: Install PIP Install script
   become: yes
