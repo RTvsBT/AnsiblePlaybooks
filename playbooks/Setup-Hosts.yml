@@ -1,6 +1,6 @@
 ---
   - name: host file update - Local DNS setup across all the servers
-    hosts: any
+    hosts: all
     gather_facts: yes
     tasks:
 
@@ -16,4 +16,4 @@
         backup: yes
       register: etchostsupdate
       when: ansible_hostname != "{{ item }}" or ansible_hostname == "{{ item }}"
-      with_items: "{{groups['any']}}"
+      with_items: "{{groups['all']}}"
