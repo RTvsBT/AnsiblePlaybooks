@@ -3,6 +3,9 @@
     hosts: all
     gather_facts: yes
     tasks:
+    - debug: var=inventory_hostname
+    - debug: var=ansible_hostname
+    - debug: var=hostvars
 
     - name: Update the /etc/hosts file with node name
       tags: etchostsupdate
