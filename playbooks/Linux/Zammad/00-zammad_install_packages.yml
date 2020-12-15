@@ -7,6 +7,14 @@
       - python
       - python-pip
     state: latest
+- name: Install PIP Install script
+  become: yes
+  get_url:
+    url: https://bootstrap.pypa.io/get-pip.py
+    dest: /opt/pip-install/get-pip.py
+- name: Install PIP
+  become: yes
+  script: /opt/pip-install/get-pip.py
 - name: Install required pip packages
   become: yes
   pip: 
