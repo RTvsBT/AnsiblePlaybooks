@@ -3,6 +3,6 @@
   become: yes
   git:
     repo: https://github.com/RTvsBT/Zammad-Docker.git
-    dest: /opt
+    dest: /opt/Zammad-Docker
     version: master
     
