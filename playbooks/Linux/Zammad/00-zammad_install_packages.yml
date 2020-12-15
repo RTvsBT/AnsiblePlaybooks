@@ -4,7 +4,8 @@
     name:
       - docker
       - docker-compose
-      - python3-pip
+      - python
+      - python-pip
     state: latest
 - name: Install required pip packages
   become: yes
