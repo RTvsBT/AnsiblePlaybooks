@@ -1,5 +1,5 @@
 - name: deploy Docker Compose stack
   docker_compose:
-    project_src: ~/Zammad-Docker
+    project_src: /opt/Zammad-Docker
     files:
     - docker-compose.yml
