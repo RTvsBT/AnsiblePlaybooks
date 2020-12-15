@@ -4,12 +4,17 @@
   
   tasks:
     
-    - include: Linux/Zammad/00-zammad_clone_repos.yml
+    - include: Linux/Zammad/00-zammad_install_packages.yml
       become: yes
       become_method: sudo
       become_user: root
 
-    - include: Linux/Zammad/01-zammad_install_containers.yml
+    - include: Linux/Zammad/01-zammad_clone_repos.yml
+      become: yes
+      become_method: sudo
+      become_user: root
+
+    - include: Linux/Zammad/02-zammad_install_containers.yml
       become: yes
       become_method: sudo
       become_user: root

@@ -1,0 +1,7 @@
+- name: Install required packages
+  become: yes
+  apt:
+    name: {{item}}
+    loop: [docker, docker-compose]
+  pip:
+    name: docker-py
