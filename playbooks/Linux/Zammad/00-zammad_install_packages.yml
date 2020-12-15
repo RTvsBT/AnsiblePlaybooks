@@ -1,7 +1,12 @@
 - name: Install required apt packages
   become: yes
-  apt: name= {{item}}
-  loop: [docker, docker-compose]
+  apt:
+    pkg: 
+    - docker
+    - docker-compose
+    state: latest
+  update_cash: yes
 - name: Install required pip packages
-  pip: name= {{item}}
-  loop: [docker-py]
+  pip: 
+    name:
+      - docker-py
