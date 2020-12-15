@@ -1,7 +1,7 @@
-- name: Install required packages
+- name: Install required apt packages
   become: yes
-  apt:
-    name: {{item}}
-    loop: [docker, docker-compose]
-  pip:
-    name: docker-py
+  apt: name= {{item}}
+  loop: [docker, docker-compose]
+- name: Install required pip packages
+  pip: name= {{item}}
+  loop: [docker-py]
