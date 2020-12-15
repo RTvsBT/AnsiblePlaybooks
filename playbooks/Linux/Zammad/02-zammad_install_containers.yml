@@ -1,4 +1,4 @@
-- name: deploy Docker Compose stack
+- name: deploy Docker Compose
   docker_compose:
     project_src: /opt/Zammad-Docker
     files:
