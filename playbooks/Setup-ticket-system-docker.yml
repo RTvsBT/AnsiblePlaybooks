@@ -1,0 +1,12 @@
+---
+- name: Setup Ticketing system
+  hosts: zammad
+  
+  tasks:
+    
+    - include: Linux/Zammad/00-zammad_clone_repos.yml
+      when: zammad_clone_repos
+      become: yes
+      become_method: sudo
+      become_user: root
+      when: stage1 is not defined
