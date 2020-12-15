@@ -4,6 +4,15 @@
   gather_facts: true
 
   tasks:
+    - name: Change Hostname file
+      become: yes
+      shell: hostnamectl set-hostname SIEM
+    - name: Change hosts file
+      become: yes
+      shell: sed -i '2 c 127.0.0.1 SIEM' /etc/hosts
+      args:
+        warn: false
+    
     - name: Install aptitude using apt
       apt: name=aptitude state=latest update_cache=yes force_apt_get=yes
 
