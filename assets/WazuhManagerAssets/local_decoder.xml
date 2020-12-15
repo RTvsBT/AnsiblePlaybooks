@@ -1,7 +1,19 @@
 <!-- The base decoder used by the HIDS -->
 
-<decoder name="local_decoder">
+<decoder name="defensie_web">
   <prematch>myScriptLog[\d+]:</prematch>
   <regex offset="after_prematch"> (\.+): (\d+/\d\d/\d\d) (\d\d:\d\d:\d\d) (\d+.\d+.\d+.\d+) (\.+)</regex>
   <order>msg.description, msg.date, msg.time, msg.ip, msg.data</order>
+</decoder>
+
+<decoder name="snort">
+  <program_name>^snort</program_name>
+</decoder>
+<decoder name="snort2">
+  <parent>snort</parent>
+</decoder>
+<decoder name="defensie_web_suricata">
+  <prematch>^[**] [\d+:\d+:\d+]<prematch>
+  <regex>(\d\d/\d\d/\d\d\d\d)</regex>
+  <order>msg.date</order>
 </decoder>
