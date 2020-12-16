@@ -11,6 +11,7 @@
         - php-mysqli
         - libapache2-mod-php
         - curl
+        - avahi-daemon
     - name: Change Hostname filie
       become: yes
       shell: hostnamectl set-hostname Defensie-Web01
