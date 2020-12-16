@@ -146,16 +146,16 @@
         src: /usr/local/bin/suricata-update
         dest: /usr/bin/suricata-update
         state: link
-    - name: Download latest version of Suricata
-      become: yes
-      get_url:
-        url: https://www.openinfosecfoundation.org/download/suricata-6.0.1.tar.gz 
-        dest: /opt/suricata-6.0.1.tar.gz
+#     - name: Download latest version of Suricata
+#       become: yes
+#       get_url:
+#         url: https://www.openinfosecfoundation.org/download/suricata-6.0.1.tar.gz 
+#         dest: /opt/suricata-6.0.1.tar.gz
     - name: Extract the downloaded files
       become: yes
       unarchive:
-        src: /opt/suricata-6.0.1.tar.gz
-        dest: /opt/suricata-6.0.1
+        src: https://www.openinfosecfoundation.org/download/suricata-6.0.1.tar.gz 
+        dest: /opt
         remote_src: yes
     - name: Change directory and configure it
       become: yes
