@@ -1,5 +1,27 @@
 ---
-- hosts: Defensie_Web01
+- hosts: localhost
+  vars_prompt:
+    - name: ip
+      prompt: What is the ip of the machine?
+      private: no
+      default: "192.168.2.35"
+    - name: username
+      prompt: What is the username?
+      private: no
+      default: "student" 
+    - name: password
+      prompt: What is the password?
+      private: no
+      default: "student"
+  tasks:
+    - name: Add Dynamic host
+      add_host:
+        name: '{{ ip }}'
+        groups: dynamically_created_hosts
+        ansible_user: "{{ username }}"
+        ansible_password: "{{ password }}"
+        ansible_become_pass: "{{ password }}"
+- hosts: dynamically_created_hosts
   tasks:
     - name: Install dependencies
       become: yes
