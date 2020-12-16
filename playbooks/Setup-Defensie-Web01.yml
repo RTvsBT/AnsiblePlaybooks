@@ -129,24 +129,24 @@
       shell: tar -xvzf /opt/suricata-6.0.1.tar.gz
     - name: Change directory and configure it
       become: yes
+      shell: ./configure --enable-nfqueue --prefix=/usr --sysconfdir=/etc --localstatedir=/var
       args:
         chdir: /opt/suricata-6.0.1
-      shell: ./configure --enable-nfqueue --prefix=/usr --sysconfdir=/etc --localstatedir=/var
     - name: Make
       become: yes
+      shell: make
       args:
         chdir: /opt/suricata-6.0.1
-      shell: make
     - name: Make install
       become: yes
+      shell: make install-full
       args:
         chdir: /opt/suricata-6.0.1
-      shell: make install-full
     - name: Install all the rules
       become: yes
+      shell: make install-rules
       args:
         chdir: /opt/suricata-6.0.1
-      shell: make install-rules
     - name: Edit suricata.yaml
       become: yes
       shell: sed -i "/^ *HOME_NET/s/\[[^]]*\]/\[192.168.2.0\/24]/g" /etc/suricata/suricata.yaml
