@@ -98,16 +98,19 @@
     - name: Move the frontend
       become: yes
       copy:
-        owner: www-data
         src: /opt/RTvsBT/RedteamDashboardFrontend/
         dest: /opt/RedteamDashboardFrontend/
+    - name: change file permissions
+      file:
+        dest: /opt/RedRedteamDashboardFrontend
+        owner: "{{ username }}"
+        group: users
+        recurse: yes
     - name: npm install
-      become: yes
       shell: npm install
       args:
         chdir: /opt/RedteamDashboardFrontend/
     - name: npm build
-      become: yes
       shell: npm run build
       args:
         chdir: /opt/RedteamDashboardFrontend/
