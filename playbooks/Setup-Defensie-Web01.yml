@@ -140,9 +140,18 @@
     - name: Pip install Suricata-update
       become: yes
       shell: pip3 install --upgrade suricata-update
+    
+#     - name: Create symlink
+#       become: yes
+#       shell: ln -s /usr/local/bin/suricata-update /usr/bin/suricata-update
+    
     - name: Create symlink
       become: yes
-      shell: ln -s /usr/local/bin/suricata-update /usr/bin/suricata-update
+      file:
+        src: /usr/local/bin/suricata-update
+        dest: /usr/bin/suricata-update
+        state: link
+        
     - name: Download latest version of Suricata
       become: yes
       shell: wget https://www.openinfosecfoundation.org/download/suricata-6.0.1.tar.gz -O /opt/suricata-6.0.1.tar.gz
