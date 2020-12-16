@@ -101,6 +101,7 @@
         src: /opt/RTvsBT/RedteamDashboardFrontend/
         dest: /opt/RedteamDashboardFrontend/
     - name: change file permissions
+      become: yes
       file:
         dest: /opt/RedRedteamDashboardFrontend
         owner: "{{ ansible_user }}"
