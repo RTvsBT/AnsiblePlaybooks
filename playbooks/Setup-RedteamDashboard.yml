@@ -104,7 +104,7 @@
       become: yes
       file:
         dest: /opt/RedRedteamDashboardFrontend
-        owner: "{{ ansible_user }}"
+        owner: "{{ ansible_user_id }}"
         group: users
         recurse: yes
     - name: npm install
