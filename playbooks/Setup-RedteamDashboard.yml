@@ -66,13 +66,13 @@
       become: yes
       copy:
         owner: www-data
-        src: ~/RTvsBT/RedteamDashboardBackend/
+        src: /opt/RTvsBT/RedteamDashboardBackend/
         dest: /var/www/flask/
     - name: Move the webserver files
       become: yes
       copy:
         # owner: www-data
-        src: ~/RTvsBT/AnsiblePlaybooks/assets/RedteamBackend/RedteamBackend.conf
+        src: /opt/RTvsBT/AnsiblePlaybooks/assets/RedteamBackend/RedteamBackend.conf
         dest: /etc/apache2/sites-available/RedteamBackend.conf
     - name: Enable site
       become: yes
@@ -87,7 +87,7 @@
       become: yes
       copy:
         owner: www-data
-        src: ~/RTvsBT/AutomatedAttackScript/
+        src: /opt/RTvsBT/AutomatedAttackScript/
         dest: /opt/AutomatedAttackScript/
 
     - name: Create attack folder
@@ -99,7 +99,7 @@
       become: yes
       copy:
         owner: www-data
-        src: ~/RTvsBT/RedteamDashboardFrontend/
+        src: /opt/RTvsBT/RedteamDashboardFrontend/
         dest: /opt/RedteamDashboardFrontend/
     - name: npm install
       become: yes
