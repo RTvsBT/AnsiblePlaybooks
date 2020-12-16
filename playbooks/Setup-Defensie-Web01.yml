@@ -24,7 +24,7 @@
       become: yes
       copy:
         owner: www-data
-        src: /home/student/RTvsBT/VulnerableWebsite/
+        src: /opt/RTvsBT/VulnerableWebsite/
         dest: /var/www/html/
     - name: Remove default apache page.
       become: yes
@@ -122,36 +122,50 @@
       shell: ln -s /usr/local/bin/suricata-update /usr/bin/suricata-update
     - name: Download latest version of Suricata
       become: yes
-      shell: wget https://www.openinfosecfoundation.org/download/suricata-6.0.1.tar.gz -O /home/student/suricata-6.0.1.tar.gz
+      shell: wget https://www.openinfosecfoundation.org/download/suricata-6.0.1.tar.gz -O /opt/suricata-6.0.1.tar.gz
     - name: Extract the downloaded files
       become: yes
-      shell: tar -xvzf /home/student/suricata-6.0.1.tar.gz
+      shell: tar -xvzf /opt/suricata-6.0.1.tar.gz
     - name: Change directory and configure it
       become: yes
       args:
-        chdir: /home/student/suricata-6.0.1
+        chdir: /opt/suricata-6.0.1
       shell: ./configure --enable-nfqueue --prefix=/usr --sysconfdir=/etc --localstatedir=/var
     - name: Make
       become: yes
       args:
-        chdir: /home/student/suricata-6.0.1
+        chdir: /opt/suricata-6.0.1
       shell: make
     - name: Make install
       become: yes
       args:
-        chdir: /home/student/suricata-6.0.1
+        chdir: /opt/suricata-6.0.1
       shell: make install-full
     - name: Install all the rules
       become: yes
       args:
-        chdir: /home/student/suricata-6.0.1
+        chdir: /opt/suricata-6.0.1
       shell: make install-rules
     - name: Edit suricata.yaml
       become: yes
       shell: sed -i "/^ *HOME_NET/s/\[[^]]*\]/\[192.168.2.0\/24]/g" /etc/suricata/suricata.yaml
+    - name: Install the suricata service
+      become: yes
+      copy:
+        src: /opt/RTvsBT/AnsiblePlaybooks/assets/suricata/suricata.service
+        dest: /etc/systemd/system/suricata.service
+        
+    - name: Add nmap scan 
+      lineinfile:
+        path: /var/lib/suricata/rules/suricata.rules
+        line: alert tcp any any -> any 22 (msg:"ET SCAN Possible NMAP SSH Enumeration"; content:"get_banner";)
+        create: yes
+    - name: Enable wazuh for next system start
+      become: yes
+      shell: systemctl enable suricata
     - name: Restart server
       become: yes
       reboot:
-    - name: Start Suricata
-      become: yes
-      shell: suricata -c /etc/suricata/suricata.yaml -i ens160
+#     - name: Start Suricata
+#       become: yes
+#       shell: suricata -c /etc/suricata/suricata.yaml -i ens160
