@@ -187,6 +187,7 @@
         dest: /etc/systemd/system/suricata.service
         
     - name: Add nmap scan 
+      become: yes
       lineinfile:
         path: /var/lib/suricata/rules/suricata.rules
         line: alert tcp any any -> any 22 (msg:"ET SCAN Possible NMAP SSH Enumeration"; content:"get_banner";)
