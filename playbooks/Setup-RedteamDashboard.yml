@@ -103,7 +103,7 @@
     - name: change file permissions
       file:
         dest: /opt/RedRedteamDashboardFrontend
-        owner: "{{ username }}"
+        owner: "{{ ansible_user }}"
         group: users
         recurse: yes
     - name: npm install
