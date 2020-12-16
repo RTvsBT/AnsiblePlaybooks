@@ -102,7 +102,7 @@
         dest: /opt/RedteamDashboardFrontend/
     - name: change file permissions
       become: yes
-      shell: "chow -R {{ansible_user_id}}:users /opt/RedteamDashboardFrontend"
+      shell: "chown -R {{ansible_user_id}}:users /opt/RedteamDashboardFrontend"
     - name: npm install
       shell: npm install
       args:
