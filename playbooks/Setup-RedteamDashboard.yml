@@ -37,6 +37,7 @@
         - python3-dev
         - nmap
         - avahi-daemon
+        - sshpass
         
     - name: Install dependencies
       become: yes
