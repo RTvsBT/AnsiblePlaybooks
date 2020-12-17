@@ -3,7 +3,16 @@
   hosts: zammad
   
   tasks:
+    - name: Change Hostname filie
+      become: yes
+      shell: hostnamectl set-hostname Defensie-Web01
     
+    - name: Change hosts file
+      become: yes
+      shell: sed -i '2 c 172.16.4.3    Defensie-Web01' /etc/hosts
+      args:
+        warn: false
+
     - include: Linux/Zammad/00-zammad_install_packages.yml
       become: yes
       become_method: sudo
