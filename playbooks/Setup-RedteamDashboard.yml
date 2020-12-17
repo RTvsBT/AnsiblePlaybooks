@@ -1,5 +1,27 @@
 ---
-- hosts: RedteamDashboard
+- hosts: localhost
+  vars_prompt:
+    - name: ip
+      prompt: What is the ip of the machine?
+      private: no
+      default: "192.168.2.50"
+    - name: username
+      prompt: What is the username?
+      private: no
+      default: "student" 
+    - name: password
+      prompt: What is the password?
+      private: no
+      default: "student"
+  tasks:
+    - name: Add Dynamic host
+      add_host:
+        name: '{{ ip }}'
+        groups: dynamically_created_hosts
+        ansible_user: "{{ username }}"
+        ansible_password: "{{ password }}"
+        ansible_become_pass: "{{ password }}"
+- hosts: dynamically_created_hosts
   vars:
     ansible_python_interpreter: /usr/bin/python3
   tasks:
@@ -13,6 +35,9 @@
         - apache2
         - libapache2-mod-wsgi-py3
         - python3-dev
+        - nmap
+        - avahi-daemon
+        - sshpass
         
     - name: Install dependencies
       become: yes
@@ -21,6 +46,7 @@
         - flask
         - flask_cors
         - pwntools
+        - python3-nmap
 
     - name: Change Hostname filie
       become: yes
@@ -41,51 +67,58 @@
       become: yes
       copy:
         owner: www-data
-        src: ~/RTvsBT/RedteamDashboardBackend/
+        src: /opt/RTvsBT/RedteamDashboardBackend/
         dest: /var/www/flask/
     - name: Move the webserver files
       become: yes
       copy:
         # owner: www-data
-        src: ~/RTvsBT/AnsiblePlaybooks/assets/RedteamBackend/RedteamBackend.conf
+        src: /opt/RTvsBT/AnsiblePlaybooks/assets/RedteamBackend/RedteamBackend.conf
         dest: /etc/apache2/sites-available/RedteamBackend.conf
     - name: Enable site
       become: yes
       shell: a2ensite RedteamBackend 
-        
-    
-    # - name: Remove default apache page.
-      # become: yes
-      # file:
-        # path: /var/www/html/index.html
-        # state: absent
-    # - name: seed the database
-      # become: yes
-      # shell: mysql < /var/www/html/db.sql
-   # - name: Change to static ip
-    # 
-    # - name: Patch apparmor
-      # become: yes
-      # lineinfile:
-        # path: /etc/apparmor.d/usr.sbin.mysqld
-        # insertbefore: '^}'
-        # line: '   /var/www/html/** rw,'
-    # - name: Patch mysqld.cnf
-      # become: yes
-      # lineinfile:
-        # path: /etc/mysql/mysql.conf.d/mysqld.cnf
-        # insertbefore: '^secure_file_priv='
-        # line: 'secure_file_priv=""'
-    # - name: change folder permissions
-      # become: yes
-      # file:
-        # path: /var/www/html
-        # mode: '777'
-    # - name: add www-data to the mysql group
-      # become: yes
-      # shell: usermod -a -G mysql www-data
-    
+
+    - name: Create attack folder
+      become: yes
+      file:
+        path: /opt/AutomatedAttackScript
+        state: directory 
+    - name: Move the Attack script
+      become: yes
+      copy:
+        owner: www-data
+        src: /opt/RTvsBT/AutomatedAttackScript/
+        dest: /opt/AutomatedAttackScript/
+
+    - name: Create attack folder
+      become: yes
+      file:
+        path: /opt/RedteamDashboardFrontend
+        state: directory 
+    - name: Move the frontend
+      become: yes
+      copy:
+        src: /opt/RTvsBT/RedteamDashboardFrontend/
+        dest: /opt/RedteamDashboardFrontend/
+    - name: change file permissions
+      become: yes
+      shell: "chown -R {{ansible_user_id}}:users /opt/RedteamDashboardFrontend"
+    - name: npm install
+      shell: npm install
+      args:
+        chdir: /opt/RedteamDashboardFrontend/
+    - name: npm build
+      shell: npm run build
+      args:
+        chdir: /opt/RedteamDashboardFrontend/
+    - name: copy build to html            
+      become: yes
+      copy:
+        src: /opt/RedteamDashboardFrontend/dist/
+        dest: /var/www/html/
+        remote_src: yes
+   
     - name: Restart server
       become: yes
       reboot:
-

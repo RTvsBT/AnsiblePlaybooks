@@ -4,6 +4,15 @@
   gather_facts: true
 
   tasks:
+    - name: Change Hostname file
+      become: yes
+      shell: hostnamectl set-hostname SIEM
+    - name: Change hosts file
+      become: yes
+      shell: sed -i '2 c 127.0.0.1 SIEM' /etc/hosts
+      args:
+        warn: false
+    
     - name: Install aptitude using apt
       apt: name=aptitude state=latest update_cache=yes force_apt_get=yes
 
@@ -70,12 +79,28 @@
       copy:
         src: ~/RTvsBT/AnsiblePlaybooks/assets/WazuhManagerAssets/local_rules.xml
         dest: /home/student/wazuh-docker/temp/local_rules.xml
+    - name: copy ossec.conf file
+      become: yes
+      copy:
+        src: ~/RTvsBT/AnsiblePlaybooks/assets/WazuhManagerAssets/ossec.conf
+        dest: /home/student/wazuh-docker/temp/ossec.conf
+    - name: copy agent.conf
+      become: yes
+      copy:
+        src: ~/RTvsBT/AnsiblePlaybooks/assets/WazuhManagerAssets/agent.conf
+        dest: /home/student/wazuh-docker/temp/agent.conf
     - name: copy decoder file into docker
       become: yes
       shell: docker cp /home/student/wazuh-docker/temp/local_decoder.xml wazuh-docker_wazuh_1:/var/ossec/etc/decoders/local_decoder.xml
     - name: copy rules file into docker
       become: yes
       shell: docker cp /home/student/wazuh-docker/temp/local_rules.xml wazuh-docker_wazuh_1:/var/ossec/etc/rules/local_rules.xml
+    - name: copy ossec.conf into docker
+      become: yes
+      shell: docker cp /home/student/wazuh-docker/temp/ossec.conf wazuh-docker_wazuh_1:/var/ossec/etc/ossec.conf
+    - name: copy agent.conf into docker
+      become: yes
+      shell: docker cp /home/student/wazuh-docker/temp/agent.conf wazuh-docker_wazuh_1:/var/ossec/etc/shared/default/agent.conf
     - name: restart wazuh-manager container
       become: yes
       shell: docker restart wazuh-docker_wazuh_1

@@ -1,0 +1,11 @@
+[Unit]
+Description=Suricata Intrusion Detection Service
+After=syslog.target network-online.target
+
+[Service]
+ExecStartPre=/bin/rm -f /var/run/suricata.pid
+ExecStart=/usr/bin/suricata -c /etc/suricata/suricata.yaml -i ens160
+ExecReload=/bin/kill -USR2 $MAINPID
+
+[Install]
+WantedBy=multi-user.target
