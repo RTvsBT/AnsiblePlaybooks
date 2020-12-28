@@ -4,5 +4,5 @@
   git:
     repo: https://github.com/RTvsBT/Zammad-Docker.git
     dest: /opt/Zammad-Docker
-    version: master
+    version: main
     
