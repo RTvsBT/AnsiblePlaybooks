@@ -13,7 +13,7 @@
     dest: /opt/get-pip.py
 - name: Install PIP
   become: yes
-  script: /opt/get-pip.py
+  shell: python /opt/get-pip.py
 - name: Install required pip packages
   become: yes
   pip: 
