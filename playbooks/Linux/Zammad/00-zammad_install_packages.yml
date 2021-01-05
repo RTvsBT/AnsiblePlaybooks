@@ -1,0 +1,22 @@
+- name: Install required apt packages
+  become: yes
+  package: 
+    name:
+      - docker
+      - docker-compose
+      - python
+    state: latest
+- name: Install PIP Install script
+  become: yes
+  get_url:
+    url: https://bootstrap.pypa.io/get-pip.py
+    dest: /opt/get-pip.py
+- name: Install PIP
+  become: yes
+  script: /opt/get-pip.py
+- name: Install required pip packages
+  become: yes
+  pip: 
+    name:
+      - docker
+      - docker-compose

@@ -1,0 +1,5 @@
+- name: deploy Docker Compose
+  docker_compose:
+    project_src: /opt/Zammad-Docker
+    files:
+    - docker-compose.yml

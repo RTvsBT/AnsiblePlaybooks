@@ -1,0 +1,8 @@
+---
+- name: Clone zammad docker compose repo
+  become: yes
+  git:
+    repo: https://github.com/RTvsBT/Zammad-Docker.git
+    dest: /opt/Zammad-Docker
+    version: main
+    
