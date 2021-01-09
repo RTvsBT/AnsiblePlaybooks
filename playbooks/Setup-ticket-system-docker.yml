@@ -5,11 +5,11 @@
   tasks:
     - name: Change Hostname filie
       become: yes
-      shell: hostnamectl set-hostname Defensie-Web01
+      shell: hostnamectl set-hostname Zammad
     
     - name: Change hosts file
       become: yes
-      shell: sed -i '2 c 172.16.4.3    Defensie-Web01' /etc/hosts
+      shell: sed -i '2 c 172.16.4.3    Zammad' /etc/hosts
       args:
         warn: false
 
