@@ -9,7 +9,7 @@
     
     - name: Change hosts file
       become: yes
-      shell: sed -i '2 c 172.16.4.3    Zammad' /etc/hosts
+      shell: sed -i '2 c 127.0.0.1    Zammad' /etc/hosts
       args:
         warn: false
 
