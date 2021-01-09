@@ -17,11 +17,11 @@
     - name: Add Dynamic host
       add_host:
         name: '{{ ip }}'
-        groups: dynamically_created_hosts
+        groups: dynamic_defensie_web01
         ansible_user: "{{ username }}"
         ansible_password: "{{ password }}"
         ansible_become_pass: "{{ password }}"
-- hosts: dynamically_created_hosts
+- hosts: dynamic_defensie_web01
   tasks:
     - name: Install dependencies
       become: yes
