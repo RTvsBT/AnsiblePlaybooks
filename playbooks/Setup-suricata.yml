@@ -22,7 +22,7 @@
         ansible_user: "{{ username }}"
         ansible_password: "{{ password }}"
         ansible_become_pass: "{{ password }}"
-- hosts: dynamically_created_hosts
+- hosts: dynamic_suricata
   tasks:
     - name: Error message
       debug:
