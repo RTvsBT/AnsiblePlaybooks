@@ -1,12 +1,13 @@
 - name: Install required apt packages
   become: yes
-  package: 
-    name:
+  apt: 
+    update_cache: yes
+    pkg:
       - docker
       - docker-compose
       - python
       - python3-pip
-    state: latest
+
 # - name: Install PIP Install script
 #   become: yes
 #   get_url:
