@@ -24,5 +24,6 @@
         ansible_become_pass: "{{ password }}"
 - hosts: dynamically_created_hosts
   tasks:
-    - debug:
-      msg: Installer not found.
+    - name: Error message
+      debug:
+        msg: Installer not found.
