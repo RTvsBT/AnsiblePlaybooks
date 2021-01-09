@@ -2,9 +2,9 @@
 - hosts: localhost
   vars_prompt:
     - name: ip
-      prompt: What is the ip of the machine?
+      prompt: What is the ip of REDTEAMDASHBOARD?
       private: no
-      default: "192.168.2.50"
+      default: "192.168.44.157"
     - name: username
       prompt: What is the username?
       private: no
