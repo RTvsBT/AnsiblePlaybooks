@@ -22,6 +22,8 @@
         ansible_password: "{{ password }}"
         ansible_become_pass: "{{ password }}"
 - hosts: dynamic_zammad
+  vars:
+    ansible_python_interpreter: /usr/bin/python3
   tasks:
     - name: Change Hostname filie
       become: yes
