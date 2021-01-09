@@ -7,6 +7,8 @@
       - docker-compose
       - python
       - python3-pip
+      - avahi-daemon
+
 
 # - name: Install PIP Install script
 #   become: yes
