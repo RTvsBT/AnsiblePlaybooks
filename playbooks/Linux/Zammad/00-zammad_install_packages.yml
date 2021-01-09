@@ -5,15 +5,16 @@
       - docker
       - docker-compose
       - python
+      - python3-pip
     state: latest
-- name: Install PIP Install script
-  become: yes
-  get_url:
-    url: https://bootstrap.pypa.io/get-pip.py
-    dest: /opt/get-pip.py
-- name: Install PIP
-  become: yes
-  shell: python /opt/get-pip.py
+# - name: Install PIP Install script
+#   become: yes
+#   get_url:
+#     url: https://bootstrap.pypa.io/get-pip.py
+#     dest: /opt/get-pip.py
+# - name: Install PIP
+#   become: yes
+#   shell: python /opt/get-pip.py
 - name: Install required pip packages
   become: yes
   pip: 
