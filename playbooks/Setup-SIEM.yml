@@ -17,11 +17,11 @@
     - name: Add Dynamic host
       add_host:
         name: '{{ ip }}'
-        groups: dynamically_created_hosts
+        groups: dynamic_siem
         ansible_user: "{{ username }}"
         ansible_password: "{{ password }}"
         ansible_become_pass: "{{ password }}"
-- hosts: dynamically_created_hosts
+- hosts: dynamic_siem
   become: true
   gather_facts: true
 
