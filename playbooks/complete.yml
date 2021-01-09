@@ -4,8 +4,8 @@
   
   
 - name: SETUP Zammad
-  import_playbook: Setup-ticket-system.yml
-  
+  import_playbook: Setup-ticket-system-docker.yml
+
 
 - name: SETUP Suricata
   import_playbook: Setup-suricata.yml
