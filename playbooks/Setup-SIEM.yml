@@ -4,7 +4,7 @@
     - name: ip
       prompt: What is the ip of the machine?
       private: no
-      default: "192.168.2.35"
+      default: "192.168.44.158"
     - name: username
       prompt: What is the username?
       private: no
@@ -62,18 +62,18 @@
     - name:  remove docker dir if it already exists
       file:
           state: absent
-          path: /home/student/wazuh-docker
+          path: /opt/wazuh-docker
 
     - name: pull docker wazuh docker repo with Elasticsearch, Kibana and Wazuh-Manager
       become: yes
       git: 
        repo: https://github.com/wazuh/wazuh-docker.git
-       dest: /home/student/wazuh-docker
+       dest: /opt/wazuh-docker
        update: yes  
     
     - name: update .env file and change password
       copy:
-         dest: /home/student/wazuh-docker/.env
+         dest: /opt/wazuh-docker/.env
          content: |
           API_USERNAME="admin"
           API_PASSWORD="blue_team_awesome"
@@ -84,45 +84,45 @@
 
     - name: start elk server
       args:
-        chdir: /home/student/wazuh-docker
+        chdir: /opt/wazuh-docker
       command: docker-compose up -d
           
     # Copy and place the decoder and rules files for the Wazuh Manager into Docker
     - name: create temp folder
       become: yes
-      shell: mkdir /home/student/wazuh-docker/temp
+      shell: mkdir /opt/wazuh-docker/temp
     - name: copy decoder file
       become: yes
       copy: 
-        src: ~/RTvsBT/AnsiblePlaybooks/assets/WazuhManagerAssets/local_decoder.xml
-        dest: /home/student/wazuh-docker/temp/local_decoder.xml
+        src: /opt/RTvsBT/AnsiblePlaybooks/assets/WazuhManagerAssets/local_decoder.xml
+        dest: /opt/wazuh-docker/temp/local_decoder.xml
     - name: copy rules file
       become: yes
       copy:
-        src: ~/RTvsBT/AnsiblePlaybooks/assets/WazuhManagerAssets/local_rules.xml
-        dest: /home/student/wazuh-docker/temp/local_rules.xml
+        src: /opt/RTvsBT/AnsiblePlaybooks/assets/WazuhManagerAssets/local_rules.xml
+        dest: /opt/wazuh-docker/temp/local_rules.xml
     - name: copy ossec.conf file
       become: yes
       copy:
-        src: ~/RTvsBT/AnsiblePlaybooks/assets/WazuhManagerAssets/ossec.conf
-        dest: /home/student/wazuh-docker/temp/ossec.conf
+        src: /opt/RTvsBT/AnsiblePlaybooks/assets/WazuhManagerAssets/ossec.conf
+        dest: /opt/wazuh-docker/temp/ossec.conf
     - name: copy agent.conf
       become: yes
       copy:
-        src: ~/RTvsBT/AnsiblePlaybooks/assets/WazuhManagerAssets/agent.conf
-        dest: /home/student/wazuh-docker/temp/agent.conf
+        src: /opt/RTvsBT/AnsiblePlaybooks/assets/WazuhManagerAssets/agent.conf
+        dest: /opt/wazuh-docker/temp/agent.conf
     - name: copy decoder file into docker
       become: yes
-      shell: docker cp /home/student/wazuh-docker/temp/local_decoder.xml wazuh-docker_wazuh_1:/var/ossec/etc/decoders/local_decoder.xml
+      shell: docker cp /opt/wazuh-docker/temp/local_decoder.xml wazuh-docker_wazuh_1:/var/ossec/etc/decoders/local_decoder.xml
     - name: copy rules file into docker
       become: yes
-      shell: docker cp /home/student/wazuh-docker/temp/local_rules.xml wazuh-docker_wazuh_1:/var/ossec/etc/rules/local_rules.xml
+      shell: docker cp /opt/wazuh-docker/temp/local_rules.xml wazuh-docker_wazuh_1:/var/ossec/etc/rules/local_rules.xml
     - name: copy ossec.conf into docker
       become: yes
-      shell: docker cp /home/student/wazuh-docker/temp/ossec.conf wazuh-docker_wazuh_1:/var/ossec/etc/ossec.conf
+      shell: docker cp /opt/wazuh-docker/temp/ossec.conf wazuh-docker_wazuh_1:/var/ossec/etc/ossec.conf
     - name: copy agent.conf into docker
       become: yes
-      shell: docker cp /home/student/wazuh-docker/temp/agent.conf wazuh-docker_wazuh_1:/var/ossec/etc/shared/default/agent.conf
+      shell: docker cp /opt/wazuh-docker/temp/agent.conf wazuh-docker_wazuh_1:/var/ossec/etc/shared/default/agent.conf
     - name: restart wazuh-manager container
       become: yes
       shell: docker restart wazuh-docker_wazuh_1
