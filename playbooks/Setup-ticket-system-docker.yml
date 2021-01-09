@@ -32,7 +32,10 @@
       shell: sed -i '2 c 127.0.0.1    Zammad' /etc/hosts
       args:
         warn: false
-
+    - name: Restart server
+      become: yes
+      reboot:
+      
     - include: Linux/Zammad/00-zammad_install_packages.yml
       become: yes
       become_method: sudo
