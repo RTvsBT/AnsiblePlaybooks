@@ -2,7 +2,7 @@
 - hosts: localhost
   vars_prompt:
     - name: ip
-      prompt: What is the ip of the machine?
+      prompt: What is the ip of DEFENSIE-WEB01?
       private: no
       default: "192.168.2.35"
     - name: username
