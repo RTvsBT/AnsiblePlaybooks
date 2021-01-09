@@ -1,21 +1,21 @@
 
 - name: SETUP Siem
-  import_playbook: playbooks/Setup-SIEM.yml
+  import_playbook: Setup-SIEM.yml
   
   
 - name: SETUP Zammad
-  import_playbook: playbooks/Setup-ticket-system.yml
+  import_playbook: Setup-ticket-system.yml
   
 
 - name: SETUP Suricata
-  import_playbook: playbooks/Setup-suricata.yml
+  import_playbook: Setup-suricata.yml
   
 
 - name: SETUP Redteam dashboard
-  import_playbook: playbooks/Setup-RedteamDashboard.yml
+  import_playbook: Setup-RedteamDashboard.yml
   
 
 - name: SETUP Defensie-web01
-  import_playbook: playbooks/Setup-Defensie-Web01.yml 
+  import_playbook: Setup-Defensie-Web01.yml 
   
   
